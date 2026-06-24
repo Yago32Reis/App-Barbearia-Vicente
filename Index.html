@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barbearia Vicente</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gold-l:#E8C87A;--gold-d:rgba(201,168,76,.12);
+  --dark:#0E0E0E;--d2:#161616;--d3:#1F1F1F;--d4:#2A2A2A;
+  --light:#F5F0E8;--l2:#EAE3D5;
+  --red:#C0392B;--rd:rgba(192,57,43,.12);
+  --green:#27AE60;--gd:rgba(39,174,96,.12);
+  --blue:#2471a3;--orange:#E67E22;
+  --gray:#888;--gray2:#555;
+  --fd:'Playfair Display',serif;--fb:'DM Sans',sans-serif;
+  --r:12px;--sh:0 8px 32px rgba(0,0,0,.5);--tr:all .25s cubic-bezier(.4,0,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fb);background:var(--dark);color:var(--light);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--d2)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
+/* HDR */
+.hdr{background:var(--d2);border-bottom:1px solid rgba(201,168,76,.18);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;gap:12px}
+.logo{font-family:var(--fd);font-size:1.4rem;color:var(--gold);letter-spacing:1px;flex-shrink:0}
+.logo span{color:var(--light);font-weight:400}
+.hdr-r{display:flex;align-items:center;gap:9px}
+.hdr-name{font-size:.8rem;color:var(--gray);max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.av{width:34px;height:34px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:var(--dark);font-weight:700;font-size:.85rem;cursor:pointer;transition:var(--tr);flex-shrink:0;user-select:none}
+.av:hover{background:var(--gold-l)}
+.nb{position:relative;background:var(--d3);border:1px solid rgba(201,168,76,.2);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;transition:var(--tr);flex-shrink:0}
+.nb:hover{border-color:var(--gold)}
+.nbd{position:absolute;top:-3px;right:-3px;background:var(--red);color:#fff;font-size:.58rem;font-weight:700;border-radius:50%;width:15px;height:15px;display:none;align-items:center;justify-content:center}
+.nbd.on{display:flex}
+/* LANDING */
+.l-logo-img {
+  width: 180px; /* Controla a largura do logo */
+  height: auto; /* Mantém a proporção perfeita */
+  margin-bottom: -10px; /* Ajusta o espaço entre o logo e o título */
+}
+#s-land{background:var(--dark);position:relative;overflow:hidden}
+.l-bg{position:absolute;inset:0;background:radial-gradient(ellipse 65% 55% at 68% 55%,rgba(201,168,76,.09) 0%,transparent 68%),repeating-linear-gradient(45deg,transparent,transparent 38px,rgba(201,168,76,.018) 38px,rgba(201,168,76,.018) 39px)}
+.l-cnt{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 24px;text-align:center;gap:24px}
+.l-icon{font-size:3.8rem}
+.l-title{font-family:var(--fd);font-size:clamp(2.4rem,8vw,5rem);font-weight:900;line-height:1;color:#fff}
+.l-title em{color:#fff;font-style:italic}
+.l-sub{font-size:1rem;color:var(--gray);max-width:380px;line-height:1.65}
+.l-btns{display:flex;gap:11px;flex-wrap:wrap;justify-content:center}
+.l-chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.chip{background:var(--d2);border:1px solid rgba(201,168,76,.15);border-radius:20px;padding:5px 13px;font-size:.76rem;color:var(--gray)}
+/* BTNS */
+.btn{padding:12px 24px;border-radius:var(--r);font-family:var(--fb);font-size:.93rem;font-weight:600;cursor:pointer;border:none;transition:var(--tr);display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.btn-gold{background:var(--gold);color:var(--dark)}.btn-gold:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,.3)}
+.btn-out{background:transparent;color:var(--gold);border:2px solid var(--gold)}.btn-out:hover{background:var(--gold-d);transform:translateY(-2px)}
+.btn-gh{background:var(--d4);color:var(--light)}.btn-gh:hover{background:var(--d3)}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#a93226}
+.btn-bl{background:var(--blue);color:#fff}.btn-bl:hover{background:#1a5e82}
+.btn-sm{padding:8px 15px;font-size:.82rem}
+.btn-xs{padding:5px 10px;font-size:.75rem}
+.btn-fw{width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+/* FORMS */
+.fc{background:var(--d2);border:1px solid rgba(201,168,76,.14);border-radius:18px;padding:32px;width:100%;max-width:480px;margin:0 auto;box-shadow:var(--sh)}
+.ft{font-family:var(--fd);font-size:1.75rem;color:var(--gold);margin-bottom:5px}
+.fs{color:var(--gray);font-size:.88rem;margin-bottom:22px}
+.fg{margin-bottom:15px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+label{display:block;font-size:.75rem;font-weight:600;color:var(--l2);margin-bottom:5px;letter-spacing:.5px;text-transform:uppercase}
+.opt{color:var(--gray);font-size:.7rem;font-weight:400;text-transform:none;letter-spacing:0}
+input,select,textarea{width:100%;padding:11px 13px;background:var(--d3);border:1px solid rgba(201,168,76,.18);border-radius:9px;color:var(--light);font-family:var(--fb);font-size:.93rem;transition:var(--tr);outline:none;appearance:none}
+input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.13)}
+input::placeholder,textarea::placeholder{color:var(--gray2)}
+input.err-field{border-color:var(--red)!important}
+select option{background:var(--d3)}
+.ferr{color:var(--red);font-size:.74rem;margin-top:4px;display:none}
+.ferr.on{display:block}
+.flink{color:var(--gold);cursor:pointer;font-size:.87rem;transition:var(--tr)}.flink:hover{color:var(--gold-l);text-decoration:underline}
+.ffoot{text-align:center;margin-top:13px;color:var(--gray);font-size:.87rem}
+.pw{position:relative}
+.pt{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--gray);cursor:pointer;font-size:.95rem;padding:0;line-height:1}
+/* AUTH WRAP */
+.aw{flex:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 20px 24px;background:var(--dark);position:relative}
+.abg{position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 28% 68%,rgba(201,168,76,.06) 0%,transparent 68%)}
+.aback{position:absolute;top:16px;left:16px;cursor:pointer;color:var(--gray);font-size:.87rem;display:flex;align-items:center;gap:5px;transition:var(--tr);z-index:1}.aback:hover{color:var(--gold)}
+/* APP */
+.app{display:flex;flex-direction:column;min-height:100vh}
+.cnt{flex:1;padding:20px;max-width:940px;margin:0 auto;width:100%}
+/* DASHBOARD */
+.wbanner{background:linear-gradient(135deg,var(--d2) 0%,rgba(201,168,76,.07) 100%);border:1px solid rgba(201,168,76,.2);border-radius:16px;padding:22px 26px;margin-bottom:20px}
+.wname{font-family:var(--fd);font-size:1.5rem;color:#fff;margin-bottom:3px}
+.wname b{color:var(--gold)}
+.wsub{color:var(--gray);font-size:.87rem}
+.wbday{background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.05));border:1px solid rgba(201,168,76,.3);border-radius:9px;padding:9px 13px;margin-top:11px;font-size:.86rem;color:var(--gold-l);display:none}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+.acard{background:var(--d2);border:1px solid rgba(201,168,76,.14);border-radius:14px;padding:20px;cursor:pointer;transition:var(--tr);display:flex;flex-direction:column;gap:8px}
+.acard:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 10px 26px rgba(201,168,76,.1)}
+.acard-ico{font-size:1.8rem}
+.acard-t{font-family:var(--fd);font-size:.98rem;color:#fff}
+.acard-d{color:var(--gray);font-size:.8rem;line-height:1.5}
+/* SECTION */
+.stitle{font-family:var(--fd);font-size:1.4rem;color:var(--gold);margin-bottom:15px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bkbtn{background:none;border:none;color:var(--gray);cursor:pointer;font-size:.86rem;display:flex;align-items:center;gap:5px;padding:0;transition:var(--tr);margin-bottom:15px;font-family:var(--fb)}.bkbtn:hover{color:var(--gold)}
+/* STEPS */
+.steps{display:flex;align-items:center;margin-bottom:24px;overflow-x:auto;padding-bottom:4px}
+.step{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:48px}
+.sdot{width:28px;height:28px;border-radius:50%;background:var(--d3);border:2px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;color:var(--gray);transition:var(--tr);z-index:1}
+.step.done .sdot{background:var(--gold);color:var(--dark);border-color:var(--gold)}
+.step.act .sdot{border-color:var(--gold);color:var(--gold);box-shadow:0 0 0 4px rgba(201,168,76,.13)}
+.slbl{font-size:.63rem;color:var(--gray);white-space:nowrap}
+.step.act .slbl,.step.done .slbl{color:var(--gold)}
+.sline{height:2px;flex:1;background:rgba(201,168,76,.14);margin-top:-16px;z-index:0;min-width:10px;transition:var(--tr)}
+.sline.done{background:var(--gold)}
+/* SERVICES */
+.srvgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:9px;margin-bottom:16px}
+.srvi{background:var(--d3);border:2px solid rgba(201,168,76,.14);border-radius:11px;padding:13px;cursor:pointer;transition:var(--tr);position:relative}
+.srvi:hover{border-color:rgba(201,168,76,.4)}
+.srvi.sel{border-color:var(--gold);background:var(--gold-d)}
+.srvi-n{font-weight:600;font-size:.89rem;color:#fff;margin-bottom:3px}
+.srvi-p{color:var(--gold);font-size:.84rem;font-weight:700}
+.srvi-ck{position:absolute;top:9px;right:9px;font-size:.95rem;color:transparent;transition:var(--tr)}
+.srvi.sel .srvi-ck{color:var(--gold)}
+.selbox{background:var(--d2);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:13px;margin-bottom:15px;display:none}
+/* BarbeariaS */
+.brbgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-bottom:16px}
+.brbc{background:var(--d3);border:2px solid rgba(201,168,76,.14);border-radius:14px;padding:16px 12px;cursor:pointer;transition:var(--tr);text-align:center;display:flex;flex-direction:column;align-items:center;gap:7px}
+.brbc:hover{border-color:rgba(201,168,76,.4)}
+.brbc.sel{border-color:var(--gold);background:var(--gold-d)}
+.brbav{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--d4));display:flex;align-items:center;justify-content:center;font-size:1.35rem;border:2px solid rgba(201,168,76,.28)}
+.brbn{font-weight:600;font-size:.88rem;color:#fff}
+.brbr{color:var(--gray);font-size:.74rem}
+.brbc-cnt{background:var(--gold-d);color:var(--gold);font-size:.68rem;font-weight:600;border-radius:9px;padding:2px 7px;border:1px solid rgba(201,168,76,.2)}
+/* CALENDAR */
+.calwrap{background:var(--d2);border:1px solid rgba(201,168,76,.14);border-radius:14px;padding:18px;margin-bottom:16px}
+.calhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.calmon{font-family:var(--fd);font-size:1.1rem;color:var(--gold)}
+.calnav{background:var(--d3);border:1px solid rgba(201,168,76,.2);border-radius:7px;color:var(--light);cursor:pointer;width:30px;height:30px;display:flex;align-items:center;justify-content:center;transition:var(--tr);font-size:1rem}.calnav:hover{border-color:var(--gold);color:var(--gold)}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.callbl{text-align:center;font-size:.67rem;font-weight:600;color:var(--gray);padding:4px 0;text-transform:uppercase}
+.cald{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:.84rem;font-weight:500;transition:var(--tr)}
+.cald.empty{cursor:default}
+.cald.closed,.cald.past{color:rgba(136,136,136,.22);cursor:not-allowed}
+.cald.avail{cursor:pointer}.cald.avail:hover{background:rgba(201,168,76,.14);color:var(--gold)}
+.cald.picked{background:var(--gold);color:var(--dark);font-weight:700}
+.cald.today{outline:1px solid rgba(201,168,76,.4)}
+.cald.blk{color:rgba(192,57,43,.35);cursor:not-allowed}
+/* SLOTS */
+.slotgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;margin-bottom:16px}
+.slot{background:var(--d3);border:1px solid rgba(201,168,76,.14);border-radius:7px;padding:9px 5px;text-align:center;font-size:.85rem;cursor:pointer;transition:var(--tr);color:var(--light);line-height:1.3}
+.slot:hover{border-color:var(--gold);color:var(--gold)}
+.slot.picked{background:var(--gold);color:var(--dark);font-weight:700;border-color:var(--gold)}
+.slot.taken{background:var(--rd);border-color:rgba(192,57,43,.2);color:var(--gray);cursor:not-allowed;text-decoration:line-through}
+.slot.mine{background:var(--gd);border-color:rgba(39,174,96,.3);color:var(--green);cursor:not-allowed}
+/* SUMMARY */
+.sumcard{background:var(--d2);border:1px solid rgba(201,168,76,.18);border-radius:14px;padding:20px;margin-bottom:15px}
+.sumrow{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.86rem;gap:10px}
+.sumrow:last-child{border:none}
+.sumlbl{color:var(--gray);flex-shrink:0}
+.sumval{color:#fff;font-weight:500;text-align:right}
+.sumtot{display:flex;justify-content:space-between;align-items:center;padding:12px 0 0;margin-top:5px;border-top:2px solid rgba(201,168,76,.28)}
+.sumtot-l{font-family:var(--fd);font-size:1rem;color:var(--light)}
+.sumtot-v{font-family:var(--fd);font-size:1.4rem;color:var(--gold);font-weight:700}
+/* APPTS */
+.apptlist{display:flex;flex-direction:column;gap:10px}
+.apptitem{background:var(--d2);border:1px solid rgba(201,168,76,.14);border-radius:13px;padding:16px;display:flex;flex-direction:column;gap:7px;transition:var(--tr)}
+.apptitem:hover{border-color:rgba(201,168,76,.26)}
+.appthdr{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.apptdt{font-family:var(--fd);font-size:.92rem;color:var(--gold)}
+.tag{font-size:.69rem;padding:3px 8px;border-radius:17px;font-weight:600;white-space:nowrap}
+.tok{background:var(--gd);color:var(--green);border:1px solid rgba(39,174,96,.28)}
+.tcancel{background:var(--rd);color:var(--red);border:1px solid rgba(192,57,43,.28)}
+.tpast{background:var(--d4);color:var(--gray);border:1px solid rgba(136,136,136,.2)}
+.apptacts{display:flex;gap:7px;flex-wrap:wrap;margin-top:2px}
+/* ADMIN */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.scard{background:var(--d2);border:1px solid rgba(201,168,76,.14);border-radius:13px;padding:16px;display:flex;flex-direction:column;gap:5px}
+.sico{font-size:1.3rem}
+.slbl{color:var(--gray);font-size:.71rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.sval{font-family:var(--fd);font-size:1.6rem;color:var(--gold);font-weight:700}
+.ssub{color:var(--gray);font-size:.72rem}
+.atabs{display:flex;gap:3px;background:var(--d2);border-radius:11px;padding:3px;margin-bottom:18px;overflow-x:auto;flex-wrap:nowrap}
+.atab{flex-shrink:0;padding:8px 13px;border-radius:8px;cursor:pointer;font-size:.79rem;font-weight:600;color:var(--gray);transition:var(--tr);white-space:nowrap}
+.atab.on{background:var(--gold);color:var(--dark)}.atab:hover:not(.on){color:var(--light);background:var(--d3)}
+.apanel{display:none}.apanel.on{display:block}
+.tblwrap{background:var(--d2);border:1px solid rgba(201,168,76,.1);border-radius:13px;overflow:hidden;overflow-x:auto;margin-bottom:15px}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+th{background:var(--d3);color:var(--gold);font-weight:600;padding:10px 12px;text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--l2);vertical-align:middle}
+tr:hover td{background:rgba(201,168,76,.025)}
+/* CHART */
+.chartwrap{background:var(--d2);border:1px solid rgba(201,168,76,.14);border-radius:13px;padding:16px;margin-bottom:16px}
+.charttitle{font-family:var(--fd);font-size:.98rem;color:var(--gold);margin-bottom:13px}
+.chartbars{display:flex;gap:5px;align-items:flex-end;height:90px}
+.charcol{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.charbar{width:100%;background:linear-gradient(180deg,var(--gold-l),var(--gold));border-radius:4px 4px 0 0;min-height:3px;position:relative;cursor:pointer}
+.charbar:hover::after{content:attr(data-tip);position:absolute;bottom:110%;left:50%;transform:translateX(-50%);background:var(--d4);border:1px solid var(--gold);border-radius:6px;padding:3px 8px;font-size:.7rem;color:var(--gold);white-space:nowrap;z-index:10}
+.charlbl{font-size:.62rem;color:var(--gray);text-align:center}
+/* TOP SERVICES */
+.tsrv{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.tsrv:last-child{border:none}
+.tsrv-bar{flex:1;height:5px;background:var(--d3);border-radius:3px;overflow:hidden}
+.tsrv-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-l));border-radius:3px}
+.tsrv-name{width:155px;font-size:.8rem;color:var(--l2);flex-shrink:0}
+.tsrv-cnt{width:28px;text-align:right;font-size:.76rem;color:var(--gold);font-weight:700;flex-shrink:0}
+/* SEARCH */
+.sbar{display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap}
+.sbar input{flex:1;min-width:150px}
+.sbar select{width:auto;min-width:130px}
+/* BLOCKS */
+.blklist{display:flex;flex-direction:column;gap:7px;margin-bottom:13px}
+.blkitem{display:flex;align-items:center;justify-content:space-between;background:var(--d3);border:1px solid rgba(192,57,43,.2);border-radius:8px;padding:9px 13px;font-size:.83rem}
+/* SHEETS */
+.shcfg{background:var(--d2);border:1px solid rgba(201,168,76,.14);border-radius:13px;padding:18px;margin-bottom:18px}
+.shcfg h3{color:var(--gold);margin-bottom:8px;font-family:var(--fd)}
+.shst{display:flex;align-items:center;gap:7px;font-size:.85rem;margin-bottom:11px}
+.shdot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);animation:pulse 2s infinite}
+.shdot.off{background:var(--gray);box-shadow:none;animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+/* NOTIF */
+.npanel{position:fixed;top:60px;right:12px;width:290px;background:var(--d2);border:1px solid rgba(201,168,76,.2);border-radius:13px;box-shadow:var(--sh);z-index:300;padding:13px;display:none;max-height:380px;overflow-y:auto}
+.npanel.on{display:block}
+.nphdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}
+.nphdr b{color:var(--gold);font-family:var(--fd)}
+.nitem{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.8rem;display:flex;gap:7px}
+.nitem:last-child{border:none}
+.ntext{color:var(--l2);line-height:1.4}
+.ntime{color:var(--gray);font-size:.7rem}
+/* MODAL */
+.mover{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:500;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;pointer-events:none;transition:opacity .22s}
+.mover.on{opacity:1;pointer-events:all}
+.modal{background:var(--d2);border:1px solid rgba(201,168,76,.2);border-radius:17px;padding:24px;width:100%;max-width:420px;transform:scale(.93);transition:transform .22s}
+.mover.on .modal{transform:scale(1)}
+.mtitle{font-family:var(--fd);font-size:1.2rem;color:var(--gold);margin-bottom:10px}
+.mfoot{display:flex;gap:8px;margin-top:17px;flex-wrap:wrap}
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--d2);border:1px solid var(--gold);border-radius:11px;padding:12px 16px;max-width:280px;z-index:9999;box-shadow:var(--sh);display:flex;align-items:center;gap:9px;font-size:.84rem;transform:translateX(150%);transition:transform .36s cubic-bezier(.4,0,.2,1)}
+.toast.on{transform:translateX(0)}
+/* LOADING */
+.lovr{position:fixed;inset:0;background:rgba(14,14,14,.75);z-index:9998;display:none;align-items:center;justify-content:center;flex-direction:column;gap:13px}
+.lovr.on{display:flex}
+.spin{width:40px;height:40px;border:3px solid rgba(201,168,76,.2);border-top:3px solid var(--gold);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.fi{animation:fi .35s ease both}
+/* MISC */
+.divr{border:none;border-top:1px solid rgba(201,168,76,.09);margin:15px 0}
+.fg-gap{display:flex;gap:8px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;background:var(--gold-d);color:var(--gold);border:1px solid rgba(201,168,76,.2);border-radius:17px;padding:2px 8px;font-size:.69rem;font-weight:600}
+.badge-g{background:var(--gd);color:var(--green);border-color:rgba(39,174,96,.2)}
+.badge-r{background:var(--rd);color:var(--red);border-color:rgba(192,57,43,.2)}
+.empty{text-align:center;padding:44px 20px;color:var(--gray)}
+.empty-i{font-size:2.6rem;margin-bottom:11px;opacity:.44}
+.empty-t{font-family:var(--fd);font-size:1.1rem;color:var(--l2);margin-bottom:6px}
+/* PROFILE PIC */
+.ppwrap{display:flex;align-items:center;gap:15px;margin-bottom:16px}
+.pp{width:66px;height:66px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.7rem;font-weight:700;color:var(--dark);border:3px solid rgba(201,168,76,.3);cursor:pointer}
+/* RESPONSIVE */
+@media(max-width:600px){
+  .fc{padding:22px 15px}
+  .cnt{padding:13px}
+  .wbanner{padding:16px}
+  .srvgrid{grid-template-columns:1fr 1fr}
+  .slotgrid{grid-template-columns:repeat(4,1fr)}
+  .sgrid{grid-template-columns:1fr 1fr}
+  .brbgrid{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr}
+  .atab{padding:7px 9px;font-size:.73rem}
+  .l-btns{flex-direction:column;align-items:center}
+  .l-btns .btn{width:196px}
+  .npanel{width:calc(100vw - 24px);right:12px}
+  .tsrv-name{width:100px}
+  .stitle{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="lovr" id="lovr"><div class="spin"></div><div style="color:var(--gray);font-size:.82rem">Aguarde...</div></div>
+
+<!-- NOTIF PANEL -->
+<div class="npanel" id="npanel">
+  <div class="nphdr"><b>🔔 Notificações</b><span onclick="closeNotif()" style="cursor:pointer;color:var(--gray);font-size:1.05rem;line-height:1">✕</span></div>
+  <div id="nlist"></div>
+</div>
+
+<!-- ══ LANDING ══ -->
+<div id="s-land" class="screen active">
+  <div class="l-bg"></div>
+  <div class="l-cnt fi">
+    <img src="img/logo.png" class="l-logo-img" alt="logo">
+    <h1 class="l-title">Barbearia<em>Vicente</em></h1>
+    <p class="l-sub">Agende seu horário com os melhores barbeiros. Rápido, simples e sem fila.</p>
+    <div class="l-btns">
+      <button class="btn btn-gold" onclick="nav('s-login')">Entrar na Conta</button>
+      <button class="btn btn-out"  onclick="nav('s-reg')">Criar Conta Grátis</button>
+      <button class="btn btn-gh"   onclick="quickAdmin()">Acesso Admin</button>
+    </div>
+    <div class="l-chips">
+      <span class="chip">✂️ Ter–Sáb 09:30–19:30</span>
+      <span class="chip">✂️ Dom 09:30–12:00</span>
+      <span class="chip">🚫 Fechado Segunda e os Feriados</span>
+    </div>
+    <p class="l-sub">Copyright 2026 Barbearia Vicente - Todos os direitos reservados</p>
+  </div>
+</div>
+
+<!-- ══ LOGIN ══ -->
+<div id="s-login" class="screen">
+  <div class="aw">
+    <div class="abg"></div>
+    <span class="aback" onclick="nav('s-land')">← Voltar</span>
+    <div class="fc fi">
+      <div class="ft">✂️ Entrar</div>
+      <div class="fs">Acesse sua conta para agendar</div>
+      <div class="fg"><label>E-mail</label><input type="email" id="li-em" placeholder="seu@email.com" autocomplete="email"><div class="ferr" id="li-em-e">E-mail inválido</div></div>
+      <div class="fg"><label>Senha</label><div class="pw"><input type="password" id="li-pw" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"><button class="pt" onclick="togglePw('li-pw',this)">👁</button></div><div class="ferr" id="li-e">E-mail ou senha incorretos</div></div>
+      <button class="btn btn-gold btn-fw" id="li-btn" onclick="doLogin()">Entrar</button>
+      <div class="ffoot" style="margin-top:11px"><span class="flink" onclick="nav('s-forgot')">Esqueci minha senha</span></div>
+      <div class="ffoot">Não tem conta? <span class="flink" onclick="nav('s-reg')">Criar conta</span></div>
+      <hr class="divr">
+      <p style="font-size:.7rem;color:var(--gray);text-align:center"><b style="color:var(--gold)"></b>Copyright 2026 Barbearia Vicente - Todos os direitos reservados<b style="color:var(--gold)"></b></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ REGISTER ══ -->
+<div id="s-reg" class="screen">
+  <div class="aw" style="align-items:flex-start;padding-top:55px">
+    <div class="abg"></div>
+    <span class="aback" onclick="nav('s-land')">← Voltar</span>
+    <div class="fc fi" style="max-width:510px">
+      <div class="ft">📋 Criar Conta</div>
+      <div class="fs">Preencha seus dados — é rápido e grátis!</div>
+      <div class="frow">
+        <div class="fg"><label>Nome Completo</label><input type="text" id="rg-n" placeholder="João Silva"><div class="ferr" id="rg-n-e">Nome obrigatório</div></div>
+        <div class="fg"><label>Data de Nascimento</label><input type="date" id="rg-dob"><div class="ferr" id="rg-dob-e">Obrigatório</div></div>
+      </div>
+      <div class="fg"><label>E-mail</label><input type="email" id="rg-em" placeholder="seu@email.com"><div class="ferr" id="rg-em-e">E-mail inválido ou já cadastrado</div></div>
+      <div class="fg"><label>Telefone / WhatsApp</label><input type="tel" id="rg-ph" placeholder="(21) 99999-9999" oninput="maskPh(this)"><div class="ferr" id="rg-ph-e">Telefone inválido</div></div>
+      <div class="frow">
+        <div class="fg"><label>Senha</label><div class="pw"><input type="password" id="rg-pw" placeholder="••••••••" oninput="pwStr(this)"><button class="pt" onclick="togglePw('rg-pw',this)">👁</button></div><div class="ferr" id="rg-pw-e">Mín. 6 caracteres</div></div>
+        <div class="fg"><label>Confirmar Senha</label><div class="pw"><input type="password" id="rg-pw2" placeholder="••••••••"><button class="pt" onclick="togglePw('rg-pw2',this)">👁</button></div><div class="ferr" id="rg-pw2-e">Senhas não coincidem</div></div>
+      </div>
+      <div id="pw-str" style="font-size:.73rem;color:var(--gray);margin:-8px 0 10px"></div>
+      <div class="fg"><label>Data de Casamento <span class="opt">(opcional)</span></label><input type="date" id="rg-wed"></div>
+      <button class="btn btn-gold btn-fw" onclick="doRegister()">Criar Conta</button>
+      <div class="ffoot">Já tem conta? <span class="flink" onclick="nav('s-login')">Entrar</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FORGOT ══ -->
+<div id="s-forgot" class="screen">
+  <div class="aw">
+    <div class="abg"></div>
+    <span class="aback" onclick="nav('s-login')">← Voltar</span>
+    <div class="fc fi">
+      <div class="ft">🔒 Redefinir Senha</div>
+      <div class="fs">Informe seu e-mail e crie uma nova senha</div>
+      <div class="fg"><label>E-mail da Conta</label><input type="email" id="fp-em" placeholder="seu@email.com"><div class="ferr" id="fp-e">E-mail não encontrado</div></div>
+      <div class="fg"><label>Nova Senha</label><div class="pw"><input type="password" id="fp-pw" placeholder="••••••••"><button class="pt" onclick="togglePw('fp-pw',this)">👁</button></div><div class="ferr" id="fp-pw-e">Mín. 6 caracteres</div></div>
+      <div class="fg"><label>Repita a Nova Senha</label><div class="pw"><input type="password" id="fp-pw2" placeholder="••••••••"><button class="pt" onclick="togglePw('fp-pw2',this)">👁</button></div><div class="ferr" id="fp-pw2-e">Senhas não coincidem</div></div>
+      <button class="btn btn-gold btn-fw" onclick="doForgot()">Redefinir Senha</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div id="s-dash" class="screen">
+  <div class="app">
+    <div class="hdr">
+      <div class="logo">Barbearia<span>Vicente</span></div>
+      <div class="hdr-r">
+        <span class="hdr-name" id="hdr-name"></span>
+        <div class="nb" onclick="toggleNotif()" title="Notificações">🔔<span class="nbd" id="nbd1">0</span></div>
+        <div class="av" id="av-dash" onclick="navProfile()" title="Meu perfil">?</div>
+      </div>
+    </div>
+    <div class="cnt">
+      <div class="wbanner fi">
+        <div class="wname">Olá, <b id="dn">Cliente</b>! 👋</div>
+        <div class="wsub" id="dsub">Bem-vindo à Barbearia Vicente</div>
+        <div class="wbday" id="wbday"></div>
+      </div>
+      <div class="cgrid fi">
+        <div class="acard" onclick="startBooking()"><div class="acard-ico">📅</div><div class="acard-t">Novo Agendamento</div><div class="acard-d">Escolha serviços, barbeiro, dia e horário</div></div>
+        <div class="acard" onclick="navAppts()"><div class="acard-ico">🗂️</div><div class="acard-t">Meus Agendamentos</div><div class="acard-d">Veja, reagende ou cancele seus horários</div></div>
+        <div class="acard" onclick="navProfile()"><div class="acard-ico">👤</div><div class="acard-t">Meu Perfil</div><div class="acard-d">Edite seus dados pessoais</div></div>
+      </div>
+      <div id="up-sec" style="display:none">
+        <div class="stitle" style="font-size:1.05rem">🗓️ Próximo Agendamento</div>
+        <div id="up-card"></div>
+      </div>
+      <div id="hist-sec" style="display:none;margin-top:16px">
+        <div class="stitle" style="font-size:1.05rem">📋 Histórico Recente</div>
+        <div id="hist-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ BOOKING ══ -->
+<div id="s-booking" class="screen">
+  <div class="app">
+    <div class="hdr">
+      <div class="logo">Barbearia<span>Vicente</span></div>
+      <div class="hdr-r"><div class="av" onclick="navProfile()">?</div></div>
+    </div>
+    <div class="cnt">
+      <button class="bkbtn" onclick="nav('s-dash')">← Voltar ao início</button>
+      <div class="stitle">📅 Novo Agendamento</div>
+      <div class="steps">
+        <div class="step act" id="bs1"><div class="sdot">1</div><div class="slbl">Serviços</div></div>
+        <div class="sline" id="bl1"></div>
+        <div class="step" id="bs2"><div class="sdot">2</div><div class="slbl">Barbeiro</div></div>
+        <div class="sline" id="bl2"></div>
+        <div class="step" id="bs3"><div class="sdot">3</div><div class="slbl">Data</div></div>
+        <div class="sline" id="bl3"></div>
+        <div class="step" id="bs4"><div class="sdot">4</div><div class="slbl">Horário</div></div>
+        <div class="sline" id="bl4"></div>
+        <div class="step" id="bs5"><div class="sdot">5</div><div class="slbl">Confirmar</div></div>
+      </div>
+      <div id="bk1" class="fi">
+        <p style="color:var(--gray);margin-bottom:11px;font-size:.86rem">Selecione um ou mais serviços:</p>
+        <div class="srvgrid" id="srvgrid"></div>
+        <div class="selbox" id="selbox">
+          <div style="font-size:.76rem;color:var(--gray);margin-bottom:3px">Selecionados:</div>
+          <div id="selnames" style="color:var(--light);font-size:.84rem"></div>
+          <div id="seltotal" style="color:var(--gold);font-weight:700;margin-top:4px"></div>
+        </div>
+        <button class="btn btn-gold" onclick="bkNext(2)">Próximo →</button>
+      </div>
+      <div id="bk2" style="display:none" class="fi">
+        <p style="color:var(--gray);margin-bottom:11px;font-size:.86rem">Escolha seu barbeiro preferido:</p>
+        <div class="brbgrid" id="brbgrid"></div>
+        <div class="fg-gap"><button class="btn btn-gh" onclick="bkPrev(1)">← Voltar</button><button class="btn btn-gold" onclick="bkNext(3)">Próximo →</button></div>
+      </div>
+      <div id="bk3" style="display:none" class="fi">
+        <p style="color:var(--gray);margin-bottom:11px;font-size:.86rem">Escolha uma data — segunda-feira é dia de folga:</p>
+        <div class="calwrap">
+          <div class="calhdr">
+            <button class="calnav" onclick="calPrev()">‹</button>
+            <div class="calmon" id="cal-lbl"></div>
+            <button class="calnav" onclick="calNext()">›</button>
+          </div>
+          <div class="calgrid" id="calgrid"></div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;font-size:.73rem;color:var(--gray);margin-bottom:13px">
+          <span>🟡 Hoje</span><span>🔴 Bloqueado/Fechado</span><span>⬛ Passado</span>
+        </div>
+        <div class="fg-gap"><button class="btn btn-gh" onclick="bkPrev(2)">← Voltar</button><button class="btn btn-gold" onclick="bkNext(4)">Próximo →</button></div>
+      </div>
+      <div id="bk4" style="display:none" class="fi">
+        <p style="color:var(--gray);margin-bottom:3px;font-size:.86rem">Escolha um horário:</p>
+        <div id="slot-lbl" style="color:var(--gold);font-weight:600;margin-bottom:13px"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;font-size:.73rem;color:var(--gray);margin-bottom:11px">
+          <span>⬜ Disponível</span><span style="color:var(--red)">🔴 Ocupado</span><span style="color:var(--green)">🟢 Meu horário</span>
+        </div>
+        <div class="slotgrid" id="slotgrid"></div>
+        <div class="fg-gap"><button class="btn btn-gh" onclick="bkPrev(3)">← Voltar</button><button class="btn btn-gold" onclick="bkNext(5)">Próximo →</button></div>
+      </div>
+      <div id="bk5" style="display:none" class="fi">
+        <p style="color:var(--gray);margin-bottom:11px;font-size:.86rem">Revise e confirme:</p>
+        <div class="sumcard">
+          <div class="sumrow"><span class="sumlbl">👤 Cliente</span><span class="sumval" id="sc"></span></div>
+          <div class="sumrow"><span class="sumlbl">✂️ Barbeiro</span><span class="sumval" id="sb"></span></div>
+          <div class="sumrow"><span class="sumlbl">📅 Data</span><span class="sumval" id="sd"></span></div>
+          <div class="sumrow"><span class="sumlbl">⏰ Horário</span><span class="sumval" id="st"></span></div>
+          <div class="sumrow"><span class="sumlbl">🪮 Serviços</span><span class="sumval" id="ss"></span></div>
+          <div class="sumtot"><span class="sumtot-l">Total a Pagar</span><span class="sumtot-v" id="sv"></span></div>
+        </div>
+        <div style="background:var(--d3);border-radius:8px;padding:10px 13px;margin-bottom:14px;font-size:.79rem;color:var(--gray)">
+          ℹ️ Ao confirmar, este horário ficará <b style="color:var(--light)">bloqueado para outros clientes</b>.
+        </div>
+        <div class="fg-gap">
+          <button class="btn btn-gh" onclick="bkPrev(4)">← Voltar</button>
+          <button class="btn btn-gold" id="cfbtn" onclick="confirmBooking()">✅ Confirmar Agendamento</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MY APPOINTMENTS ══ -->
+<div id="s-appts" class="screen">
+  <div class="app">
+    <div class="hdr">
+      <div class="logo">Barbearia<span>Vicente</span></div>
+      <div class="hdr-r">
+        <div class="nb" onclick="toggleNotif()">🔔<span class="nbd" id="nbd2">0</span></div>
+        <div class="av" onclick="navProfile()">?</div>
+      </div>
+    </div>
+    <div class="cnt">
+      <button class="bkbtn" onclick="nav('s-dash')">← Voltar</button>
+      <div class="stitle">🗂️ Meus Agendamentos</div>
+      <div class="sbar">
+        <select id="af" onchange="renderMyAppts()">
+          <option value="all">Todos</option>
+          <option value="upcoming">Próximos</option>
+          <option value="past">Passados</option>
+          <option value="cancelled">Cancelados</option>
+        </select>
+        <input type="text" id="as" placeholder="Buscar serviço ou barbeiro..." oninput="renderMyAppts()" style="flex:1;min-width:150px">
+      </div>
+      <div class="apptlist" id="myappts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROFILE ══ -->
+<div id="s-profile" class="screen">
+  <div class="app">
+    <div class="hdr">
+      <div class="logo">Barbearia<span>Vicente</span></div>
+      <div class="hdr-r"><div class="av" onclick="doLogout()" title="Sair">?</div></div>
+    </div>
+    <div class="cnt">
+      <button class="bkbtn" id="prof-back" onclick="nav('s-dash')">← Voltar</button>
+      <div class="stitle">👤 Meu Perfil</div>
+      <div class="fc" style="max-width:100%">
+        <div class="ppwrap">
+          <div class="pp" id="pp" onclick="pickAvatar()">?</div>
+          <div>
+            <div style="font-weight:600;color:#fff" id="pp-name">Nome</div>
+            <div style="font-size:.78rem;color:var(--gray)" id="pp-since">Membro desde</div>
+            <div style="font-size:.76rem;color:var(--gold);margin-top:2px" id="pp-cnt"></div>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Nome Completo</label><input type="text" id="pf-n"></div>
+          <div class="fg"><label>E-mail</label><input type="email" id="pf-em" disabled style="opacity:.5"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Telefone</label><input type="tel" id="pf-ph" oninput="maskPh(this)"></div>
+          <div class="fg"><label>Data de Nascimento</label><input type="date" id="pf-dob"></div>
+        </div>
+        <div class="fg"><label>Data de Casamento <span class="opt">(opcional)</span></label><input type="date" id="pf-wed"></div>
+        <hr class="divr">
+        <div class="fg"><label>Nova Senha <span class="opt">(em branco = manter atual)</span></label><div class="pw"><input type="password" id="pf-pw" placeholder="Nova senha..."><button class="pt" onclick="togglePw('pf-pw',this)">👁</button></div></div>
+        <div class="fg"><label>Confirmar Nova Senha</label><div class="pw"><input type="password" id="pf-pw2" placeholder="Repita..."><button class="pt" onclick="togglePw('pf-pw2',this)">👁</button></div><div class="ferr" id="pf-pw-e">Senhas não coincidem</div></div>
+        <div class="fg-gap" style="margin-top:4px">
+          <button class="btn btn-gold" onclick="saveProfile()">💾 Salvar Alterações</button>
+          <button class="btn btn-red"  onclick="doLogout()">🚪 Sair da Conta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN ══ -->
+<div id="s-admin" class="screen">
+  <div class="app">
+    <div class="hdr">
+      <div class="logo">Barbearia<span>Vicente</span> <span class="badge badge-r" style="font-size:.62rem;margin-left:4px;vertical-align:middle">ADM</span></div>
+      <div class="hdr-r">
+        <div class="nb" onclick="toggleNotif()">🔔<span class="nbd" id="nbd3">0</span></div>
+        <div class="av" onclick="doLogout()" title="Sair" style="background:var(--red);font-size:.7rem">ADM</div>
+      </div>
+    </div>
+    <div class="cnt">
+      <div class="stitle">🛡️ Painel Administrativo</div>
+      <div class="sgrid fi" id="sgrid">
+        <div class="scard"><div class="sico">👥</div><div class="slbl">Clientes</div><div class="sval" id="st-cl">0</div><div class="ssub">cadastrados</div></div>
+        <div class="scard"><div class="sico">📅</div><div class="slbl">Agendamentos</div><div class="sval" id="st-ap">0</div><div class="ssub">confirmados</div></div>
+        <div class="scard"><div class="sico">💰</div><div class="slbl">Fat. Semanal</div><div class="sval" id="st-wk">R$0</div><div class="ssub" id="st-wk-c"></div></div>
+        <div class="scard"><div class="sico">📊</div><div class="slbl">Fat. Mensal</div><div class="sval" id="st-mo">R$0</div><div class="ssub" id="st-mo-c"></div></div>
+        <div class="scard"><div class="sico">🏆</div><div class="slbl">Fat. Anual</div><div class="sval" id="st-yr">R$0</div><div class="ssub" id="st-yr-c"></div></div>
+        <div class="scard"><div class="sico">❌</div><div class="slbl">Cancelamentos</div><div class="sval" id="st-ca">0</div><div class="ssub">este mês</div></div>
+      </div>
+      <div class="chartwrap fi">
+        <div class="charttitle">📈 Faturamento — Últimas 8 semanas</div>
+        <div class="chartbars" id="revchart"></div>
+      </div>
+      <div class="atabs">
+        <div class="atab on"  onclick="adTab('clients')">👥 Clientes</div>
+        <div class="atab"     onclick="adTab('appts')">📅 Agendamentos</div>
+        <div class="atab"     onclick="adTab('Barbearias')">✂️ Barbeiros</div>
+        <div class="atab"     onclick="adTab('services')">🪮 Serviços</div>
+        <div class="atab"     onclick="adTab('blocks')">🚫 Bloqueios</div>
+        <div class="atab"     onclick="adTab('sheets')">📊 Sheets</div>
+      </div>
+      <!-- CLIENTS -->
+      <div class="apanel on" id="p-clients">
+        <div class="sbar">
+          <input type="text" id="cl-s" placeholder="Nome ou e-mail..." oninput="rAdClients()" style="flex:1">
+          <select id="cl-o" onchange="rAdClients()">
+            <option value="dd">Mais recentes</option><option value="da">Mais antigos</option>
+            <option value="nm">Nome A–Z</option><option value="ap">Mais agendamentos</option>
+          </select>
+        </div>
+        <div class="tblwrap"><table><thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Nascimento</th><th>Casamento</th><th>Cadastro</th><th>Agend.</th><th>Total Gasto</th></tr></thead><tbody id="cl-tb"></tbody></table></div>
+      </div>
+      <!-- APPTS -->
+      <div class="apanel" id="p-appts">
+        <div class="sbar">
+          <input type="text" id="ap-s" placeholder="Cliente, barbeiro ou serviço..." oninput="rAdAppts()" style="flex:1">
+          <select id="ap-f" onchange="rAdAppts()">
+            <option value="all">Todos</option><option value="confirmed">Confirmados</option>
+            <option value="cancelled">Cancelados</option><option value="upcoming">Próximos</option><option value="past">Passados</option>
+          </select>
+          <select id="ap-b" onchange="rAdAppts()"><option value="">Todos barbeiros</option></select>
+        </div>
+        <div id="ap-sum" style="display:flex;gap:9px;margin-bottom:11px;flex-wrap:wrap"></div>
+        <div class="tblwrap"><table><thead><tr><th>Cliente</th><th>Barbeiro</th><th>Data</th><th>Horário</th><th>Serviços</th><th>Total</th><th>Status</th><th>Ações</th></tr></thead><tbody id="ap-tb"></tbody></table></div>
+      </div>
+      <!-- BarbeariaS -->
+      <div class="apanel" id="p-Barbearias">
+        <div style="background:var(--d3);border-radius:10px;padding:14px;margin-bottom:13px;display:flex;gap:9px;flex-wrap:wrap;align-items:flex-end">
+          <div class="fg" style="margin:0;flex:1;min-width:150px"><label>Nome</label><input type="text" id="nb-n" placeholder="Nome do barbeiro"></div>
+          <div class="fg" style="margin:0;flex:1;min-width:120px"><label>Função</label><input type="text" id="nb-r" placeholder="Barbeiro Sênior"></div>
+          <div class="fg" style="margin:0;width:80px"><label>Emoji</label><input type="text" id="nb-e" placeholder="💈" maxlength="2"></div>
+          <button class="btn btn-gold btn-sm" onclick="addBarbearia()">+ Adicionar</button>
+        </div>
+        <div class="tblwrap"><table><thead><tr><th>Nome</th><th>Emoji</th><th>Função</th><th>Agend.</th><th>Fat. Total</th><th>Mais Pedido</th><th>Ações</th></tr></thead><tbody id="brb-tb"></tbody></table></div>
+      </div>
+      <!-- SERVICES ANALYTICS -->
+      <div class="apanel" id="p-services">
+        <div class="chartwrap"><div class="charttitle">🏆 Serviços Mais Pedidos</div><div id="top-srv"></div></div>
+        <div class="tblwrap"><table><thead><tr><th>Serviço</th><th>Pedidos</th><th>Receita Total</th><th>% do Total</th></tr></thead><tbody id="srv-tb"></tbody></table></div>
+      </div>
+      <!-- BLOCKS -->
+      <div class="apanel" id="p-blocks">
+        <p style="color:var(--gray);font-size:.83rem;margin-bottom:13px">Bloqueie datas (feriados, eventos) para nenhum cliente agendar.</p>
+        <div style="background:var(--d3);border-radius:10px;padding:13px;margin-bottom:13px;display:flex;gap:9px;flex-wrap:wrap;align-items:flex-end">
+          <div class="fg" style="margin:0;flex:1;min-width:150px"><label>Data</label><input type="date" id="blk-d"></div>
+          <div class="fg" style="margin:0;flex:2;min-width:190px"><label>Motivo</label><input type="text" id="blk-r" placeholder="Feriado, Evento..."></div>
+          <button class="btn btn-red btn-sm" onclick="addBlock()">🚫 Bloquear</button>
+        </div>
+        <div class="blklist" id="blklist"></div>
+      </div>
+      <!-- SHEETS -->
+      <div class="apanel" id="p-sheets">
+        <div class="shcfg">
+          <h3>🔗 Integração Google Sheets</h3>
+          <div class="shst"><div class="shdot off" id="shdot"></div><span id="sh-stxt">Dados salvos localmente</span></div>
+          <p style="color:var(--gray);font-size:.81rem;margin-bottom:12px">Configure sua Google Apps Script Web App para sincronizar automaticamente.</p>
+          <div class="fg"><label>URL da Web App</label><input type="url" id="sh-url" placeholder="https://script.google.com/macros/s/..."></div>
+          <button class="btn btn-gold btn-sm" onclick="saveShCfg()">💾 Salvar URL</button>
+        </div>
+        <div class="stitle" style="font-size:.98rem">📤 Exportar / Sincronizar</div>
+        <div class="fg-gap" style="margin-bottom:14px">
+          <button class="btn btn-out btn-sm" onclick="expCSV('clients')">📥 Clientes CSV</button>
+          <button class="btn btn-out btn-sm" onclick="expCSV('appointments')">📥 Agendamentos CSV</button>
+          <button class="btn btn-out btn-sm" onclick="expCSV('revenue')">📥 Faturamento CSV</button>
+          <button class="btn btn-out btn-sm" onclick="expCSV('Barbearias')">📥 Barbeiros CSV</button>
+          <button class="btn btn-gold btn-sm" onclick="syncSheets()">🔄 Sync Google Sheets</button>
+        </div>
+        <div style="padding:14px;background:var(--d3);border-radius:10px;font-size:.78rem;color:var(--gray);line-height:1.9;margin-bottom:13px">
+          <b style="color:var(--l2)">📋 Como configurar:</b><br>
+          1. Acesse <a href="https://script.google.com" target="_blank" style="color:var(--gold)">script.google.com</a> → Novo projeto<br>
+          2. Cole o código Apps Script fornecido e publique como Web App<br>
+          3. Configurar: Executar como = <b style="color:var(--light)">Eu</b> · Acesso = <b style="color:var(--light)">Qualquer pessoa</b><br>
+          4. Cole a URL gerada acima e clique em Sync<br>
+          <b style="color:var(--l2)">Abas criadas automaticamente:</b> Clientes · Agendamentos · Barbeiros · Faturamento · Bloqueios
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="mover" id="m-cancel">
+  <div class="modal">
+    <div class="mtitle">❌ Cancelar Agendamento</div>
+    <p style="color:var(--gray);font-size:.86rem">Tem certeza? O horário voltará a ficar disponível para outros clientes.</p>
+    <div id="m-cancel-info" style="background:var(--d3);border-radius:8px;padding:11px;margin-top:11px;font-size:.82rem;color:var(--l2)"></div>
+    <div class="mfoot"><button class="btn btn-gh" onclick="closeMod('m-cancel')">Manter</button><button class="btn btn-red" onclick="confirmCancel()">Sim, cancelar</button></div>
+  </div>
+</div>
+
+<div class="mover" id="m-reschedule">
+  <div class="modal" style="max-width:460px">
+    <div class="mtitle">🔄 Reagendar</div>
+    <p style="color:var(--gray);font-size:.83rem;margin-bottom:13px">Escolha nova data e horário:</p>
+    <div class="frow">
+      <div class="fg"><label>Nova Data</label><input type="date" id="resc-d" onchange="loadRescSlots()"></div>
+      <div class="fg"><label>Novo Horário</label><select id="resc-t"><option>Selecione a data primeiro</option></select></div>
+    </div>
+    <div class="mfoot"><button class="btn btn-gh" onclick="closeMod('m-reschedule')">Cancelar</button><button class="btn btn-gold" onclick="confirmResc()">Confirmar Reagendamento</button></div>
+  </div>
+</div>
+
+<div class="mover" id="m-adcancel">
+  <div class="modal">
+    <div class="mtitle">❌ Cancelar (Admin)</div>
+    <p style="color:var(--gray);font-size:.86rem">Cancelar este agendamento como administrador?</p>
+    <div id="m-adcancel-info" style="background:var(--d3);border-radius:8px;padding:11px;margin-top:11px;font-size:.82rem;color:var(--l2)"></div>
+    <div class="mfoot"><button class="btn btn-gh" onclick="closeMod('m-adcancel')">Voltar</button><button class="btn btn-red" onclick="adConfirmCancel()">Cancelar Agendamento</button></div>
+  </div>
+</div>
+
+<div class="mover" id="m-avatar">
+  <div class="modal">
+    <div class="mtitle">🎨 Escolher Avatar</div>
+    <div id="av-opts" style="display:flex;flex-wrap:wrap;gap:9px;margin:4px 0 13px"></div>
+    <div class="mfoot"><button class="btn btn-gh" onclick="closeMod('m-avatar')">Fechar</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span id="t-ico">✅</span><span id="t-msg"></span></div>
+
+<script>
+// ═══════════ CONSTANTS ═══════════
+const SVCS=[
+  {id:'ct',name:'Corte Tesoura',price:40},
+  {id:'ci',name:'Corte Infantil',price:40},
+  {id:'bs',name:'Barba Simples',price:25},
+  {id:'br',name:'Barba Rústica',price:30},
+  {id:'pz',name:'Pézinho',price:15},
+  {id:'sb',name:'Sobrancelha',price:15},
+  {id:'cb',name:'COMBO (Corte + Barba)',price:45},
+  {id:'al',name:'Alisamento',price:20},
+  {id:'rx',name:'Relaxamento',price:20},
+  {id:'pg',name:'Pigmentação',price:20},
+  {id:'mt',name:'Corte Máquina e Tesoura',price:35},
+  {id:'dg',name:'Corte Máquina (Degradê)',price:35},
+  {id:'up',name:'Corte Máquina (Um Pente)',price:30},
+];
+const DEF_BarbeariaS=[
+  {id:'b1',name:'Carlos',role:'Barbeiro Sênior',emoji:'💈'},
+  {id:'b2',name:'Diego',role:'Especialista em Barba',emoji:'✂️'},
+  {id:'b3',name:'Rafael',role:'Barbeiro',emoji:'🪒'},
+];
+const MONTHS=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DAYS=['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const AVTS=['😎','🧔','👨‍🦱','👨‍🦰','👨‍🦳','👨‍🦲','🧑‍🦱','👱','🧑','😄','🙂','😊','✂️','💈','🪒','💇'];
+
+// ═══════════ STATE ═══════════
+let DB={users:[],appointments:[],Barbearias:[],blocks:[],notifs:[],sheetsUrl:''};
+let CU=null,isAdm=false;
+let BK={svcs:[],Barbearia:null,date:null,time:null};
+let calCur=new Date();
+let cancelId=null,rescId=null,adCancelId=null;
+
+// ═══════════ STORAGE ═══════════
+function loadDB(){
+  try{
+    const s=localStorage.getItem('bp4');
+    if(s) DB=JSON.parse(s);
+    if(!Array.isArray(DB.Barbearias)||!DB.Barbearias.length) DB.Barbearias=JSON.parse(JSON.stringify(DEF_BarbeariaS));
+    if(!Array.isArray(DB.users))       DB.users=[];
+    if(!Array.isArray(DB.appointments))DB.appointments=[];
+    if(!Array.isArray(DB.blocks))      DB.blocks=[];
+    if(!Array.isArray(DB.notifs))      DB.notifs=[];
+    if(!DB.sheetsUrl)                  DB.sheetsUrl='';
+    if(!DB.users.find(u=>u.email==='admin@barbeariavicente.com'))
+      DB.users.push({id:'admin',email:'admin@barbeariavicente.com',password:'••••••••',name:'Administrador',
+        phone:'',dob:'',wedding:'',role:'admin',avatar:'🛡️',createdAt:new Date().toISOString()});
+  }catch(e){
+    DB={users:[],appointments:[],Barbearias:JSON.parse(JSON.stringify(DEF_BarbeariaS)),blocks:[],notifs:[],sheetsUrl:''};
+  }
+}
+function saveDB(){try{localStorage.setItem('bp4',JSON.stringify(DB));}catch(e){}}
+
+// ═══════════ NAVIGATION ═══════════
+function nav(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function navProfile(){
+  openProfile();
+  nav('s-profile');
+}
+
+function navAppts(){
+  renderMyAppts();
+  nav('s-appts');
+}
+
+// ═══════════ SESSION ═══════════
+function saveSession(){localStorage.setItem('bp4_s',JSON.stringify({id:CU.id,role:CU.role}));}
+function clearSession(){localStorage.removeItem('bp4_s');}
+function restoreSession(){
+  try{
+    const s=JSON.parse(localStorage.getItem('bp4_s'));
+    if(!s) return false;
+    const u=DB.users.find(u=>u.id===s.id);
+    if(!u) return false;
+    CU=u; isAdm=u.role==='admin'; return true;
+  }catch(e){return false;}
+}
+
+// ═══════════ VALIDATION ═══════════
+function isEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+function isPh(p){return p.replace(/\D/g,'').length>=10;}
+function setErr(id,on,msg){
+  const el=document.getElementById(id);
+  if(!el) return;
+  if(msg) el.textContent=msg;
+  el.classList.toggle('on',on);
+}
+function clearErrs(...ids){ids.forEach(id=>setErr(id,false));}
+function pwStr(inp){
+  const p=inp.value,el=document.getElementById('pw-str');
+  if(!p){el.textContent='';return;}
+  if(p.length<6){el.innerHTML='Força: <span style="color:var(--red)">Muito fraca</span>';return;}
+  const sc=[/[A-Z]/.test(p),/[0-9]/.test(p),/[^A-Za-z0-9]/.test(p)].filter(Boolean).length;
+  const map=['<span style="color:var(--orange)">Fraca</span>','<span style="color:var(--gold)">Boa</span>','<span style="color:var(--green)">Forte ✓</span>'];
+  el.innerHTML='Força: '+(p.length<8?map[0]:map[sc]||map[0]);
+}
+
+// ═══════════ AUTH ═══════════
+function doLogin(){
+  clearErrs('li-em-e','li-e');
+  const em=document.getElementById('li-em').value.trim();
+  const pw=document.getElementById('li-pw').value;
+  if(!isEmail(em)){setErr('li-em-e',true);return;}
+  const u=DB.users.find(u=>u.email.toLowerCase()===em.toLowerCase()&&u.password===pw);
+  if(!u){setErr('li-e',true);shakEl('li-btn');return;}
+  CU=u; isAdm=u.role==='admin';
+  saveSession();
+  updateAvatars();
+  if(isAdm){nav('s-admin');renderAdmin();}
+  else{updateDash();renderUpcoming();renderHistory();nav('s-dash');checkBdays();}
+  updateNBadge();
+  showToast('Bem-vindo, '+u.name.split(' ')[0]+'! 👋','✅');
+}
+
+function doRegister(){
+  clearErrs('rg-n-e','rg-dob-e','rg-em-e','rg-ph-e','rg-pw-e','rg-pw2-e');
+  const n  =document.getElementById('rg-n').value.trim();
+  const dob=document.getElementById('rg-dob').value;
+  const em =document.getElementById('rg-em').value.trim();
+  const ph =document.getElementById('rg-ph').value;
+  const pw =document.getElementById('rg-pw').value;
+  const pw2=document.getElementById('rg-pw2').value;
+  const wed=document.getElementById('rg-wed').value;
+  let ok=true;
+  if(!n)          {setErr('rg-n-e',true);ok=false;}
+  if(!dob)        {setErr('rg-dob-e',true,'Nascimento obrigatório');ok=false;}
+  if(!isEmail(em)){setErr('rg-em-e',true,'E-mail inválido');ok=false;}
+  else if(DB.users.find(u=>u.email.toLowerCase()===em.toLowerCase()))
+                  {setErr('rg-em-e',true,'E-mail já cadastrado');ok=false;}
+  if(!isPh(ph))   {setErr('rg-ph-e',true,'Telefone inválido');ok=false;}
+  if(pw.length<6) {setErr('rg-pw-e',true,'Mínimo 6 caracteres');ok=false;}
+  if(pw!==pw2)    {setErr('rg-pw2-e',true,'Senhas não coincidem');ok=false;}
+  if(!ok) return;
+  const u={id:'u'+Date.now(),email:em,password:pw,name:n,phone:ph,dob,wedding:wed,
+    role:'client',avatar:AVTS[Math.floor(Math.random()*4)],createdAt:new Date().toISOString()};
+  DB.users.push(u); saveDB();
+  pushNotif('admin','🆕 Novo cadastro: '+n);
+  syncAuto('register',u);
+  showToast('Conta criada! Faça o login.','🎉');
+  ['rg-n','rg-dob','rg-em','rg-ph','rg-pw','rg-pw2','rg-wed'].forEach(id=>{document.getElementById(id).value='';});
+  setTimeout(()=>nav('s-login'),1400);
+}
+
+function doForgot(){
+  clearErrs('fp-e','fp-pw-e','fp-pw2-e');
+  const em =document.getElementById('fp-em').value.trim();
+  const pw =document.getElementById('fp-pw').value;
+  const pw2=document.getElementById('fp-pw2').value;
+  if(!isEmail(em)){setErr('fp-e',true,'E-mail inválido');return;}
+  const u=DB.users.find(u=>u.email.toLowerCase()===em.toLowerCase());
+  if(!u){setErr('fp-e',true,'E-mail não encontrado');return;}
+  if(pw.length<6){setErr('fp-pw-e',true,'Mínimo 6 caracteres');return;}
+  if(pw!==pw2){setErr('fp-pw2-e',true,'Senhas não coincidem');return;}
+  u.password=pw; saveDB();
+  showToast('Senha redefinida!','✅');
+  ['fp-em','fp-pw','fp-pw2'].forEach(id=>{document.getElementById(id).value='';});
+  setTimeout(()=>nav('s-login'),1300);
+}
+
+function doLogout(){
+  CU=null; isAdm=false; clearSession();
+  showToast('Até logo! 👋','👋');
+  setTimeout(()=>nav('s-land'),600);
+}
+function quickAdmin(){
+  document.getElementById('li-em').value='admin@barbeariavicente.com';
+  document.getElementById('li-pw').value='••••••••';
+  nav('s-login');
+  setTimeout(doLogin,150);
+}
+
+// ═══════════ PROFILE ═══════════
+function openProfile(){
+  if(!CU) return;
+  document.getElementById('pf-n').value  =CU.name||'';
+  document.getElementById('pf-em').value =CU.email||'';
+  document.getElementById('pf-ph').value =CU.phone||'';
+  document.getElementById('pf-dob').value=CU.dob||'';
+  document.getElementById('pf-wed').value=CU.wedding||'';
+  document.getElementById('pf-pw').value ='';
+  document.getElementById('pf-pw2').value='';
+  document.getElementById('pp').textContent=CU.avatar||CU.name[0]||'?';
+  document.getElementById('pp-name').textContent=CU.name;
+  document.getElementById('pp-since').textContent='Membro desde '+new Date(CU.createdAt).toLocaleDateString('pt-BR');
+  const cnt=DB.appointments.filter(a=>a.userId===CU.id&&a.status!=='cancelled').length;
+  document.getElementById('pp-cnt').textContent=cnt+' agendamento'+(cnt!==1?'s':'')+' realizados';
+  document.getElementById('prof-back').onclick=()=>nav(isAdm?'s-admin':'s-dash');
+  clearErrs('pf-pw-e');
+}
+
+function saveProfile(){
+  clearErrs('pf-pw-e');
+  const n  =document.getElementById('pf-n').value.trim();
+  const ph =document.getElementById('pf-ph').value;
+  const dob=document.getElementById('pf-dob').value;
+  const wed=document.getElementById('pf-wed').value;
+  const pw =document.getElementById('pf-pw').value;
+  const pw2=document.getElementById('pf-pw2').value;
+  if(!n){showToast('Nome não pode ser vazio!','⚠️');return;}
+  if(pw&&pw.length<6){setErr('pf-pw-e',true,'Mínimo 6 caracteres');return;}
+  if(pw&&pw!==pw2){setErr('pf-pw-e',true,'Senhas não coincidem');return;}
+  CU.name=n; CU.phone=ph; CU.dob=dob; CU.wedding=wed;
+  if(pw) CU.password=pw;
+  const i=DB.users.findIndex(u=>u.id===CU.id);
+  if(i>=0) DB.users[i]=CU;
+  saveDB(); updateAvatars();
+  document.getElementById('pp-name').textContent=n;
+  if(!isAdm&&document.getElementById('dn')) document.getElementById('dn').textContent=n.split(' ')[0];
+  showToast('Perfil atualizado!','✅');
+}
+
+function pickAvatar(){
+  document.getElementById('av-opts').innerHTML=AVTS.map(a=>`
+    <div onclick="setAvatar('${a}')" style="font-size:1.7rem;cursor:pointer;padding:7px;border-radius:9px;
+    border:2px solid ${CU&&CU.avatar===a?'var(--gold)':'rgba(201,168,76,.15)'};
+    background:${CU&&CU.avatar===a?'var(--gold-d)':'var(--d3)'};transition:var(--tr)">${a}</div>`).join('');
+  openMod('m-avatar');
+}
+function setAvatar(a){
+  if(!CU) return;
+  CU.avatar=a;
+  const i=DB.users.findIndex(u=>u.id===CU.id);
+  if(i>=0) DB.users[i]=CU;
+  saveDB();
+  document.getElementById('pp').textContent=a;
+  updateAvatars();
+  closeMod('m-avatar');
+  showToast('Avatar atualizado!','✅');
+}
+
+// ═══════════ DASHBOARD ═══════════
+function updateDash(){
+  if(!CU) return;
+  const first=CU.name.split(' ')[0];
+  document.getElementById('dn').textContent=first;
+  document.getElementById('hdr-name').textContent=first;
+  const h=new Date().getHours();
+  const g=h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';
+  document.getElementById('dsub').textContent=g+', '+first+'! O que vamos fazer hoje?';
+}
+
+function updateAvatars(){
+  if(!CU) return;
+  const v=CU.avatar||CU.name[0]||'?';
+  ['av-dash'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&!isAdm) el.textContent=v;
+  });
+  if(document.getElementById('hdr-name'))
+    document.getElementById('hdr-name').textContent=CU.name.split(' ')[0];
+}
+
+function checkBdays(){
+  if(!CU||isAdm) return;
+  const t=new Date();
+  const bday=document.getElementById('wbday');
+  if(CU.dob){
+    const d=new Date(CU.dob+'T12:00:00');
+    if(d.getMonth()===t.getMonth()&&d.getDate()===t.getDate()){
+      bday.style.display='block';
+      bday.textContent='🎂 Feliz aniversário, '+CU.name.split(' ')[0]+'! Se presenteie com um cuidado especial hoje!';
+    }
+  }
+  if(CU.wedding){
+    const d=new Date(CU.wedding+'T12:00:00');
+    if(d.getMonth()===t.getMonth()&&d.getDate()===t.getDate()){
+      bday.style.display='block';
+      bday.textContent='💍 Feliz aniversário de casamento! Que tal se arrumar para celebrar?';
+    }
+  }
+}
+
+function renderUpcoming(){
+  if(!CU) return;
+  const now=new Date();
+  const up=DB.appointments.filter(a=>a.userId===CU.id&&a.status==='confirmed'&&new Date(a.datetime)>=now)
+    .sort((a,b)=>new Date(a.datetime)-new Date(b.datetime));
+  const sec=document.getElementById('up-sec');
+  if(!up.length){sec.style.display='none';return;}
+  sec.style.display='block';
+  const a=up[0];
+  const diff=Math.ceil((new Date(a.datetime)-now)/86400000);
+  const dtxt=diff===0?'Hoje':diff===1?'Amanhã':'Em '+diff+' dias';
+  document.getElementById('up-card').innerHTML=`<div class="apptitem fi">
+    <div class="appthdr"><div class="apptdt">📅 ${fd(a.date)} às ${a.time}</div><span class="tag tok">${dtxt}</span></div>
+    <div style="color:var(--l2);font-size:.86rem">✂️ ${a.services.map(s=>s.name).join(', ')}</div>
+    <div style="color:var(--gray);font-size:.8rem">💈 ${a.Barbearia}</div>
+    <div style="color:var(--gold);font-weight:700;font-size:.93rem">R$ ${a.total.toFixed(2)}</div>
+  </div>`;
+}
+
+function renderHistory(){
+  if(!CU) return;
+  const sec=document.getElementById('hist-sec');
+  const list=DB.appointments.filter(a=>a.userId===CU.id)
+    .sort((a,b)=>new Date(b.datetime)-new Date(a.datetime)).slice(0,3);
+  if(!list.length){sec.style.display='none';return;}
+  sec.style.display='block';
+  document.getElementById('hist-list').innerHTML=list.map(a=>`<div class="apptitem" style="padding:12px">
+    <div class="appthdr">
+      <div class="apptdt" style="font-size:.84rem">📅 ${fd(a.date)} às ${a.time}</div>
+      <span class="tag ${a.status==='cancelled'?'tcancel':'tpast'}">${a.status==='cancelled'?'Cancelado':'Realizado'}</span>
+    </div>
+    <div style="color:var(--gray);font-size:.78rem">✂️ ${a.services.map(s=>s.name).join(', ')} · 💈 ${a.Barbearia}</div>
+    <div style="color:var(--gold);font-size:.83rem;font-weight:600">R$ ${a.total.toFixed(2)}</div>
+  </div>`).join('');
+}
+
+// ═══════════ MY APPOINTMENTS ═══════════
+function renderMyAppts(){
+  if(!CU) return;
+  const flt=document.getElementById('af')?.value||'all';
+  const src=(document.getElementById('as')?.value||'').toLowerCase();
+  const now=new Date();
+  let list=DB.appointments.filter(a=>a.userId===CU.id);
+  if(flt==='upcoming') list=list.filter(a=>a.status==='confirmed'&&new Date(a.datetime)>=now);
+  else if(flt==='past') list=list.filter(a=>new Date(a.datetime)<now&&a.status!=='cancelled');
+  else if(flt==='cancelled') list=list.filter(a=>a.status==='cancelled');
+  if(src) list=list.filter(a=>a.services.some(s=>s.name.toLowerCase().includes(src))||a.Barbearia.toLowerCase().includes(src));
+  list.sort((a,b)=>new Date(b.datetime)-new Date(a.datetime));
+  const el=document.getElementById('myappts');
+  if(!list.length){
+    el.innerHTML=`<div class="empty"><div class="empty-i">📭</div><div class="empty-t">Nenhum agendamento</div><p>Clique em "Novo Agendamento" para começar!</p></div>`;
+    return;
+  }
+  el.innerHTML=list.map(a=>{
+    const past=new Date(a.datetime)<now;
+    const canC=a.status==='confirmed'&&!past;
+    const tag=a.status==='cancelled'?'tcancel':past?'tpast':'tok';
+    const txt=a.status==='cancelled'?'Cancelado':past?'Realizado':'Confirmado';
+    return `<div class="apptitem fi">
+      <div class="appthdr"><div class="apptdt">📅 ${fd(a.date)} às ${a.time}</div><span class="tag ${tag}">${txt}</span></div>
+      <div style="color:var(--l2);font-size:.86rem">✂️ ${a.services.map(s=>s.name).join(', ')}</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:.8rem;color:var(--gray)"><span>💈 ${a.Barbearia}</span><span>🕓 ${ts(a.createdAt)}</span></div>
+      <div style="color:var(--gold);font-weight:700">R$ ${a.total.toFixed(2)}</div>
+      <div class="apptacts">
+        ${canC?`<button class="btn btn-bl btn-xs" onclick="openResc('${a.id}')">🔄 Reagendar</button>`:''}
+        ${canC?`<button class="btn btn-red btn-xs" onclick="openCancel('${a.id}')">❌ Cancelar</button>`:''}
+        ${canC?`<button class="btn btn-gh btn-xs" onclick="shareAppt('${a.id}')">📤 Compartilhar</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════ BOOKING ═══════════
+function startBooking(){
+  BK={svcs:[],Barbearia:null,date:null,time:null};
+  calCur=new Date();
+  bkStep(1);
+  renderSrvs();
+  renderBrbs();
+  nav('s-booking');
+}
+
+function bkStep(n){
+  for(let i=1;i<=5;i++){
+    const el=document.getElementById('bk'+i);
+    if(el) el.style.display=i===n?'block':'none';
+    const st=document.getElementById('bs'+i);
+    if(st){st.classList.remove('act','done');if(i<n)st.classList.add('done');else if(i===n)st.classList.add('act');}
+    const ln=document.getElementById('bl'+i);
+    if(ln) ln.classList.toggle('done',i<n);
+  }
+  if(n===3) renderCal();
+  if(n===4) renderSlots();
+  if(n===5) renderSum();
+  window.scrollTo(0,0);
+}
+function bkNext(n){
+  if(n===2&&!BK.svcs.length){showToast('Selecione ao menos um serviço!','⚠️');return;}
+  if(n===3&&!BK.Barbearia){showToast('Selecione um barbeiro!','⚠️');return;}
+  if(n===4&&!BK.date){showToast('Selecione uma data!','⚠️');return;}
+  if(n===5&&!BK.time){showToast('Selecione um horário!','⚠️');return;}
+  bkStep(n);
+}
+function bkPrev(n){bkStep(n);}
+
+// SERVICES
+function renderSrvs(){
+  document.getElementById('srvgrid').innerHTML=SVCS.map(s=>`
+    <div class="srvi${BK.svcs.find(x=>x.id===s.id)?' sel':''}" onclick="toggleSrv('${s.id}')">
+      <div class="srvi-ck">✓</div>
+      <div class="srvi-n">${s.name}</div>
+      <div class="srvi-p">R$ ${s.price.toFixed(2)}</div>
+    </div>`).join('');
+  const box=document.getElementById('selbox');
+  if(!BK.svcs.length){box.style.display='none';return;}
+  box.style.display='block';
+  document.getElementById('selnames').textContent=BK.svcs.map(s=>s.name).join(', ');
+  document.getElementById('seltotal').textContent='Total: R$ '+BK.svcs.reduce((s,x)=>s+x.price,0).toFixed(2);
+}
+function toggleSrv(id){
+  const s=SVCS.find(x=>x.id===id);
+  const i=BK.svcs.findIndex(x=>x.id===id);
+  if(i>=0) BK.svcs.splice(i,1); else BK.svcs.push({...s});
+  renderSrvs();
+}
+
+// BarbeariaS
+function renderBrbs(){
+  document.getElementById('brbgrid').innerHTML=DB.Barbearias.map(b=>{
+    const cnt=DB.appointments.filter(a=>a.Barbearia===b.name&&a.status==='confirmed').length;
+    return `<div class="brbc${BK.Barbearia===b.name?' sel':''}" onclick="pickBarbearia('${b.name}')">
+      <div class="brbav">${b.emoji}</div>
+      <div class="brbn">${b.name}</div>
+      <div class="brbr">${b.role}</div>
+      <div class="brbc-cnt">${cnt} atendimentos</div>
+    </div>`;
+  }).join('');
+}
+function pickBarbearia(n){BK.Barbearia=n;renderBrbs();}
+
+// CALENDAR
+function isMon(d){return d.getDay()===1;}
+function isPast(d){const t=new Date();t.setHours(0,0,0,0);return d<t;}
+function isBlocked(d){const s=toISO(d);return DB.blocks.some(b=>b.date===s);}
+function toISO(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function pad(n){return String(n).padStart(2,'0');}
+
+function renderCal(){
+  const y=calCur.getFullYear(),m=calCur.getMonth();
+  document.getElementById('cal-lbl').textContent=MONTHS[m]+' '+y;
+  const g=document.getElementById('calgrid');
+  g.innerHTML=DAYS.map(d=>`<div class="callbl">${d}</div>`).join('');
+  const first=new Date(y,m,1).getDay();
+  for(let i=0;i<first;i++) g.innerHTML+='<div class="cald empty"></div>';
+  const days=new Date(y,m+1,0).getDate();
+  const todISO=toISO(new Date());
+  for(let d=1;d<=days;d++){
+    const date=new Date(y,m,d);
+    const iso=toISO(date);
+    const past=isPast(date),mon=isMon(date),blk=isBlocked(date);
+    const sel=BK.date===iso,tod=iso===todISO;
+    let cls='cald';
+    if(past)       cls+=' past';
+    else if(mon)   cls+=' closed';
+    else if(blk)   cls+=' blk';
+    else           cls+=' avail';
+    if(sel) cls+=' picked';
+    if(tod) cls+=' today';
+    const ok=!past&&!mon&&!blk;
+    const tip=mon?'Fechado (segunda-feira)':blk?'Bloqueado: '+(DB.blocks.find(b=>b.date===iso)?.reason||''):past?'Data passada':'';
+    g.innerHTML+=`<div class="${cls}" ${ok?`onclick="pickDate('${iso}')"`:''} title="${tip}">${d}</div>`;
+  }
+}
+function calPrev(){
+  const t=new Date();
+  if(calCur.getFullYear()===t.getFullYear()&&calCur.getMonth()<=t.getMonth()) return;
+  calCur=new Date(calCur.getFullYear(),calCur.getMonth()-1,1); renderCal();
+}
+function calNext(){calCur=new Date(calCur.getFullYear(),calCur.getMonth()+1,1); renderCal();}
+function pickDate(iso){BK.date=iso; BK.time=null; renderCal();}
+
+// SLOTS
+function getSlots(iso){
+  const d=new Date(iso+'T12:00:00'),sun=d.getDay()===0;
+  const endH=sun?12:19,endM=sun?0:30;
+  const s=[];let h=9,m=30;
+  while(h<endH||(h===endH&&m<=endM)){
+    s.push(pad(h)+':'+pad(m));
+    m+=30;if(m>=60){h++;m=0;}
+  }
+  return [...new Set(s)];
+}
+function bookedFor(iso){
+  return DB.appointments.filter(a=>a.date===iso&&a.status!=='cancelled').map(a=>({t:a.time,mine:a.userId===CU.id}));
+}
+function dayName(iso){return DAYS[new Date(iso+'T12:00:00').getDay()];}
+
+function renderSlots(){
+  document.getElementById('slot-lbl').textContent='📅 '+fd(BK.date)+' ('+dayName(BK.date)+')';
+  const slots=getSlots(BK.date);
+  const booked=bookedFor(BK.date);
+  document.getElementById('slotgrid').innerHTML=slots.map(t=>{
+    const b=booked.find(x=>x.t===t);
+    if(b&&b.mine) return `<div class="slot mine" title="Seu agendamento">🟢 ${t}<br><small>Seu agend.</small></div>`;
+    if(b)         return `<div class="slot taken" title="Ocupado">${t}<br><small>Ocupado</small></div>`;
+    const sel=BK.time===t;
+    return `<div class="slot${sel?' picked':''}" onclick="pickSlot('${t}')">${t}</div>`;
+  }).join('');
+}
+function pickSlot(t){BK.time=t; renderSlots();}
+
+// SUMMARY & CONFIRM
+function renderSum(){
+  document.getElementById('sc').textContent=CU.name;
+  document.getElementById('sb').textContent=BK.Barbearia;
+  document.getElementById('sd').textContent=fd(BK.date)+' ('+dayName(BK.date)+')';
+  document.getElementById('st').textContent=BK.time;
+  document.getElementById('ss').textContent=BK.svcs.map(s=>s.name).join(', ');
+  document.getElementById('sv').textContent='R$ '+BK.svcs.reduce((s,x)=>s+x.price,0).toFixed(2);
+}
+
+function confirmBooking(){
+  // Re-check slot
+  const bk=bookedFor(BK.date).filter(x=>!x.mine);
+  if(bk.find(x=>x.t===BK.time)){showToast('Horário ocupado agora! Escolha outro.','⚠️');bkStep(4);return;}
+  const btn=document.getElementById('cfbtn');
+  btn.disabled=true; btn.textContent='Confirmando...';
+  const total=BK.svcs.reduce((s,x)=>s+x.price,0);
+  const a={id:'a'+Date.now(),userId:CU.id,client:CU.name,clientPhone:CU.phone||'',
+    Barbearia:BK.Barbearia,date:BK.date,time:BK.time,datetime:BK.date+'T'+BK.time,
+    services:BK.svcs.map(s=>({...s})),total,status:'confirmed',createdAt:new Date().toISOString()};
+  DB.appointments.push(a); saveDB();
+  pushNotif(CU.id,'✅ Agendamento confirmado: '+fd(a.date)+' às '+a.time+' com '+a.Barbearia);
+  pushNotif('admin','📅 Novo agendamento: '+CU.name+' — '+fd(a.date)+' '+a.time+' com '+a.Barbearia);
+  syncAuto('appointment',a);
+  setTimeout(()=>{
+    btn.disabled=false; btn.textContent='✅ Confirmar Agendamento';
+    showToast('Agendamento confirmado! 🎉','🎉');
+    renderUpcoming(); renderHistory();
+    nav('s-dash');
+  },700);
+}
+
+// ═══════════ CANCEL ═══════════
+function openCancel(id){
+  cancelId=id;
+  const a=DB.appointments.find(x=>x.id===id);
+  document.getElementById('m-cancel-info').innerHTML=`<b>${fd(a.date)}</b> às <b>${a.time}</b> com <b>${a.Barbearia}</b><br>${a.services.map(s=>s.name).join(', ')}<br><b style="color:var(--gold)">R$ ${a.total.toFixed(2)}</b>`;
+  openMod('m-cancel');
+}
+function confirmCancel(){
+  const a=DB.appointments.find(x=>x.id===cancelId);
+  if(a){a.status='cancelled';a.cancelledAt=new Date().toISOString();
+    pushNotif(CU.id,'❌ Agendamento cancelado: '+fd(a.date)+' às '+a.time);
+    pushNotif('admin','❌ Cancelamento: '+a.client+' — '+fd(a.date)+' '+a.time);
+  }
+  saveDB(); closeMod('m-cancel'); cancelId=null;
+  renderMyAppts(); renderUpcoming(); renderHistory();
+  showToast('Agendamento cancelado.','❌');
+}
+
+// ═══════════ RESCHEDULE ═══════════
+function openResc(id){
+  rescId=id;
+  const a=DB.appointments.find(x=>x.id===id);
+  const tom=new Date(); tom.setDate(tom.getDate()+1);
+  document.getElementById('resc-d').min=toISO(tom);
+  document.getElementById('resc-d').value=a.date;
+  document.getElementById('resc-t').innerHTML='<option>Selecione uma data</option>';
+  openMod('m-reschedule');
+  setTimeout(loadRescSlots,50);
+}
+function loadRescSlots(){
+  const date=document.getElementById('resc-d').value;
+  if(!date) return;
+  const d=new Date(date+'T12:00:00');
+  if(isMon(d)||isBlocked(d)){document.getElementById('resc-t').innerHTML='<option>Data indisponível</option>';return;}
+  const slots=getSlots(date);
+  const taken=bookedFor(date).filter(x=>!x.mine).map(x=>x.t);
+  const avail=slots.filter(t=>!taken.includes(t));
+  if(!avail.length){document.getElementById('resc-t').innerHTML='<option>Sem horários disponíveis</option>';return;}
+  document.getElementById('resc-t').innerHTML=avail.map(t=>`<option value="${t}">${t}</option>`).join('');
+}
+function confirmResc(){
+  const a=DB.appointments.find(x=>x.id===rescId);
+  const nd=document.getElementById('resc-d').value;
+  const nt=document.getElementById('resc-t').value;
+  if(!nd||!nt||nt.includes('Selecione')||nt.includes('indisponível')||nt.includes('disponíveis')){showToast('Escolha data e horário válidos!','⚠️');return;}
+  const taken=bookedFor(nd).filter(x=>!x.mine).map(x=>x.t);
+  if(taken.includes(nt)){showToast('Horário ocupado! Tente outro.','⚠️');return;}
+  const od=a.date,ot=a.time;
+  a.date=nd; a.time=nt; a.datetime=nd+'T'+nt; a.rescheduledAt=new Date().toISOString();
+  saveDB();
+  pushNotif(CU.id,'🔄 Reagendado: '+fd(od)+' '+ot+' → '+fd(nd)+' '+nt);
+  closeMod('m-reschedule'); rescId=null;
+  renderMyAppts(); renderUpcoming();
+  showToast('Reagendado para '+fd(nd)+' às '+nt+'!','🔄');
+}
+
+function shareAppt(id){
+  const a=DB.appointments.find(x=>x.id===id);
+  const txt=`✂️ Meu agendamento Barbearia Vicente\n📅 ${fd(a.date)} às ${a.time}\n💈 ${a.Barbearia}\n🪮 ${a.services.map(s=>s.name).join(', ')}\n💰 R$ ${a.total.toFixed(2)}`;
+  if(navigator.share) navigator.share({title:'Barbearia Vicente',text:txt});
+  else{navigator.clipboard?.writeText(txt);showToast('Copiado!','📋');}
+}
+
+// ═══════════ NOTIFICATIONS ═══════════
+function pushNotif(uid,text){
+  DB.notifs.push({id:'n'+Date.now()+Math.random(),userId:uid,text,time:new Date().toISOString(),read:false});
+  if(DB.notifs.length>200) DB.notifs=DB.notifs.slice(-200);
+  saveDB(); updateNBadge();
+}
+function myNotifs(){return DB.notifs.filter(n=>n.userId===CU?.id||n.userId==='all').sort((a,b)=>new Date(b.time)-new Date(a.time));}
+function updateNBadge(){
+  const cnt=myNotifs().filter(n=>!n.read).length;
+  ['nbd1','nbd2','nbd3'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.textContent=cnt;el.classList.toggle('on',cnt>0);});
+}
+function toggleNotif(){
+  const p=document.getElementById('npanel');
+  p.classList.toggle('on');
+  if(p.classList.contains('on')){
+    renderNotifs();
+    myNotifs().forEach(n=>n.read=true);
+    saveDB(); updateNBadge();
+  }
+}
+function closeNotif(){document.getElementById('npanel').classList.remove('on');}
+function renderNotifs(){
+  const list=myNotifs();
+  document.getElementById('nlist').innerHTML=!list.length
+    ?'<div class="empty" style="padding:18px;font-size:.8rem">Sem notificações</div>'
+    :list.slice(0,20).map(n=>`<div class="nitem"><div><div class="ntext">${n.text}</div><div class="ntime">${ts(n.time)}</div></div></div>`).join('');
+}
+document.addEventListener('click',e=>{
+  const p=document.getElementById('npanel');
+  if(p.classList.contains('on')&&!p.contains(e.target)&&!e.target.closest('.nb')) closeNotif();
+});
+
+// ═══════════ ADMIN ═══════════
+function renderAdmin(){
+  updateStats(); renderRevChart(); rAdClients(); rAdAppts(); rAdBarbearias(); rAdServices(); rAdBlocks(); updateApFilter();
+  if(DB.sheetsUrl){document.getElementById('sh-url').value=DB.sheetsUrl;document.getElementById('shdot').classList.remove('off');document.getElementById('sh-stxt').textContent='URL configurada';}
+}
+
+function updateStats(){
+  const clients=DB.users.filter(u=>u.role!=='admin');
+  document.getElementById('st-cl').textContent=clients.length;
+  const conf=DB.appointments.filter(a=>a.status==='confirmed');
+  document.getElementById('st-ap').textContent=conf.length;
+  const now=new Date();
+  const w0=new Date(now.getTime()-7*864e5);
+  const ms=new Date(now.getFullYear(),now.getMonth(),1);
+  const ys=new Date(now.getFullYear(),0,1);
+  const wa=conf.filter(a=>new Date(a.datetime)>=w0);
+  const ma=conf.filter(a=>new Date(a.datetime)>=ms);
+  const ya=conf.filter(a=>new Date(a.datetime)>=ys);
+  document.getElementById('st-wk').textContent='R$'+fmtM(wa.reduce((s,a)=>s+a.total,0));
+  document.getElementById('st-wk-c').textContent=wa.length+' agendamentos';
+  document.getElementById('st-mo').textContent='R$'+fmtM(ma.reduce((s,a)=>s+a.total,0));
+  document.getElementById('st-mo-c').textContent=ma.length+' agendamentos';
+  document.getElementById('st-yr').textContent='R$'+fmtM(ya.reduce((s,a)=>s+a.total,0));
+  document.getElementById('st-yr-c').textContent=ya.length+' agendamentos';
+  const cM=DB.appointments.filter(a=>a.status==='cancelled'&&new Date(a.cancelledAt||a.createdAt)>=ms).length;
+  document.getElementById('st-ca').textContent=cM;
+}
+
+function renderRevChart(){
+  const el=document.getElementById('revchart');
+  const wks=[];const now=new Date();
+  for(let i=7;i>=0;i--){
+    const end=new Date(now.getTime()-(i*7-7)*864e5);
+    const start=new Date(now.getTime()-i*7*864e5);
+    const rev=DB.appointments.filter(a=>a.status==='confirmed'&&new Date(a.datetime)>=start&&new Date(a.datetime)<end).reduce((s,a)=>s+a.total,0);
+    wks.push({lbl:i===0?'Esta':i===1?'Ant.':'S-'+i,rev});
+  }
+  const max=Math.max(...wks.map(w=>w.rev),1);
+  el.innerHTML=wks.map(w=>`<div class="charcol">
+    <div class="charbar" style="height:${Math.max(3,Math.round(w.rev/max*82))}px" data-tip="R$ ${w.rev.toFixed(2)}"></div>
+    <div class="charlbl">${w.lbl}</div>
+  </div>`).join('');
+}
+
+function rAdClients(){
+  const src=(document.getElementById('cl-s')?.value||'').toLowerCase();
+  const ord=document.getElementById('cl-o')?.value||'dd';
+  let cl=DB.users.filter(u=>u.role!=='admin');
+  if(src) cl=cl.filter(u=>u.name.toLowerCase().includes(src)||u.email.toLowerCase().includes(src)||u.phone.includes(src));
+  if(ord==='dd') cl.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  else if(ord==='da') cl.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
+  else if(ord==='nm') cl.sort((a,b)=>a.name.localeCompare(b.name));
+  else cl.sort((a,b)=>DB.appointments.filter(x=>x.userId===b.id).length-DB.appointments.filter(x=>x.userId===a.id).length);
+  const tb=document.getElementById('cl-tb');
+  if(!cl.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:20px">Nenhum cliente</td></tr>';return;}
+  tb.innerHTML=cl.map(u=>{
+    const ap=DB.appointments.filter(a=>a.userId===u.id);
+    const spent=ap.filter(a=>a.status==='confirmed').reduce((s,a)=>s+a.total,0);
+    const bday=checkBday(u);
+    return `<tr>
+      <td><b style="color:#fff">${u.name}${bday?' 🎂':''}</b></td>
+      <td style="font-size:.77rem">${u.email}</td>
+      <td>${u.phone||'—'}</td>
+      <td>${u.dob?fd(u.dob):'—'}</td>
+      <td>${u.wedding?fd(u.wedding):'—'}</td>
+      <td style="font-size:.73rem;color:var(--gray)">${new Date(u.createdAt).toLocaleDateString('pt-BR')}</td>
+      <td><span class="badge">${ap.length}</span></td>
+      <td style="color:var(--gold);font-weight:600">R$ ${spent.toFixed(2)}</td>
+    </tr>`;
+  }).join('');
+}
+function checkBday(u){
+  if(!u.dob) return false;
+  const t=new Date();const d=new Date(u.dob+'T12:00:00');
+  return d.getMonth()===t.getMonth()&&d.getDate()===t.getDate();
+}
+
+function rAdAppts(){
+  const src=(document.getElementById('ap-s')?.value||'').toLowerCase();
+  const flt=document.getElementById('ap-f')?.value||'all';
+  const brf=document.getElementById('ap-b')?.value||'';
+  const now=new Date();
+  let list=[...DB.appointments].sort((a,b)=>new Date(b.datetime)-new Date(a.datetime));
+  if(flt==='confirmed') list=list.filter(a=>a.status==='confirmed');
+  else if(flt==='cancelled') list=list.filter(a=>a.status==='cancelled');
+  else if(flt==='upcoming') list=list.filter(a=>a.status==='confirmed'&&new Date(a.datetime)>=now);
+  else if(flt==='past') list=list.filter(a=>new Date(a.datetime)<now);
+  if(brf) list=list.filter(a=>a.Barbearia===brf);
+  if(src) list=list.filter(a=>a.client.toLowerCase().includes(src)||a.Barbearia.toLowerCase().includes(src)||a.services.some(s=>s.name.toLowerCase().includes(src)));
+  const tot=list.filter(a=>a.status==='confirmed').reduce((s,a)=>s+a.total,0);
+  document.getElementById('ap-sum').innerHTML=`<span class="badge">${list.length} resultado${list.length!==1?'s':''}</span><span class="badge badge-g">R$ ${tot.toFixed(2)} confirmados</span>`;
+  const tb=document.getElementById('ap-tb');
+  if(!list.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;color:var(--gray);padding:20px">Nenhum agendamento</td></tr>';return;}
+  tb.innerHTML=list.map(a=>`<tr>
+    <td><b style="color:#fff">${a.client}</b><br><span style="font-size:.71rem;color:var(--gray)">${a.clientPhone||''}</span></td>
+    <td>${a.Barbearia}</td><td>${fd(a.date)}</td><td>${a.time}</td>
+    <td style="max-width:160px;font-size:.75rem">${a.services.map(s=>s.name).join(', ')}</td>
+    <td style="color:var(--gold);font-weight:700">R$ ${a.total.toFixed(2)}</td>
+    <td><span class="tag ${a.status==='cancelled'?'tcancel':'tok'}">${a.status==='cancelled'?'Cancelado':'Confirmado'}</span></td>
+    <td>${a.status==='confirmed'&&new Date(a.datetime)>=now?`<button class="btn btn-red btn-xs" onclick="adOpenCancel('${a.id}')">✕</button>`:'—'}</td>
+  </tr>`).join('');
+}
+
+function updateApFilter(){
+  const sel=document.getElementById('ap-b');if(!sel)return;
+  sel.innerHTML='<option value="">Todos barbeiros</option>'+DB.Barbearias.map(b=>`<option value="${b.name}">${b.name}</option>`).join('');
+}
+
+function rAdBarbearias(){
+  const tb=document.getElementById('brb-tb');
+  tb.innerHTML=DB.Barbearias.map(b=>{
+    const ap=DB.appointments.filter(a=>a.Barbearia===b.name&&a.status==='confirmed');
+    const rev=ap.reduce((s,a)=>s+a.total,0);
+    const sc={};ap.forEach(a=>a.services.forEach(s=>{sc[s.name]=(sc[s.name]||0)+1;}));
+    const top=Object.entries(sc).sort((a,b)=>b[1]-a[1])[0];
+    return `<tr>
+      <td><b style="color:#fff">${b.name}</b></td><td style="font-size:1.25rem">${b.emoji}</td>
+      <td style="color:var(--gray)">${b.role}</td><td><span class="badge">${ap.length}</span></td>
+      <td style="color:var(--gold);font-weight:600">R$ ${rev.toFixed(2)}</td>
+      <td style="font-size:.76rem;color:var(--l2)">${top?top[0]+' ('+top[1]+'x)':'—'}</td>
+      <td><button class="btn btn-red btn-xs" onclick="rmBarbearia('${b.id}')">🗑️</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function addBarbearia(){
+  const n=document.getElementById('nb-n').value.trim();
+  const r=document.getElementById('nb-r').value.trim()||'Barbeiro';
+  const e=document.getElementById('nb-e').value.trim()||'💈';
+  if(!n){showToast('Digite o nome!','⚠️');return;}
+  if(DB.Barbearias.find(b=>b.name.toLowerCase()===n.toLowerCase())){showToast('Barbeiro já existe!','⚠️');return;}
+  DB.Barbearias.push({id:'b'+Date.now(),name:n,role:r,emoji:e});
+  saveDB();
+  ['nb-n','nb-r','nb-e'].forEach(id=>document.getElementById(id).value='');
+  rAdBarbearias(); updateApFilter();
+  showToast(n+' adicionado!','✅');
+}
+function rmBarbearia(id){
+  const b=DB.Barbearias.find(x=>x.id===id);
+  if(DB.appointments.find(a=>a.Barbearia===b?.name&&a.status==='confirmed'&&new Date(a.datetime)>new Date())){
+    showToast('Barbeiro tem agendamentos futuros!','⚠️');return;
+  }
+  DB.Barbearias=DB.Barbearias.filter(b=>b.id!==id); saveDB();
+  rAdBarbearias(); updateApFilter();
+  showToast('Barbeiro removido.','🗑️');
+}
+
+function rAdServices(){
+  const sc={},sr={};
+  DB.appointments.filter(a=>a.status==='confirmed').forEach(a=>a.services.forEach(s=>{sc[s.name]=(sc[s.name]||0)+1;sr[s.name]=(sr[s.name]||0)+s.price;}));
+  const sorted=Object.entries(sc).sort((a,b)=>b[1]-a[1]);
+  const maxC=sorted[0]?.[1]||1;
+  const totC=Object.values(sc).reduce((s,v)=>s+v,0)||1;
+  document.getElementById('top-srv').innerHTML=sorted.slice(0,10).map(([n,c])=>`
+    <div class="tsrv">
+      <div class="tsrv-name">${n}</div>
+      <div class="tsrv-bar"><div class="tsrv-fill" style="width:${Math.round(c/maxC*100)}%"></div></div>
+      <div class="tsrv-cnt">${c}</div>
+    </div>`).join('');
+  document.getElementById('srv-tb').innerHTML=sorted.map(([n,c])=>`<tr>
+    <td><b style="color:#fff">${n}</b></td>
+    <td><span class="badge">${c}</span></td>
+    <td style="color:var(--gold);font-weight:600">R$ ${(sr[n]||0).toFixed(2)}</td>
+    <td style="color:var(--gray)">${Math.round(c/totC*100)}%</td>
+  </tr>`).join('');
+}
+
+// BLOCKS
+function rAdBlocks(){
+  const list=document.getElementById('blklist');
+  if(!DB.blocks.length){list.innerHTML='<div style="color:var(--gray);font-size:.83rem;padding:7px 0">Nenhuma data bloqueada.</div>';return;}
+  list.innerHTML=DB.blocks.sort((a,b)=>a.date.localeCompare(b.date)).map(b=>`
+    <div class="blkitem">
+      <div><b style="color:var(--light)">${fd(b.date)}</b> <span style="color:var(--gray);font-size:.78rem">— ${b.reason||'Sem motivo'}</span></div>
+      <button class="btn btn-gh btn-xs" onclick="rmBlock('${b.id}')">✕</button>
+    </div>`).join('');
+}
+function addBlock(){
+  const d=document.getElementById('blk-d').value;
+  const r=document.getElementById('blk-r').value.trim()||'Bloqueado';
+  if(!d){showToast('Selecione uma data!','⚠️');return;}
+  if(DB.blocks.find(b=>b.date===d)){showToast('Data já bloqueada!','⚠️');return;}
+  DB.blocks.push({id:'blk'+Date.now(),date:d,reason:r});
+  saveDB();
+  ['blk-d','blk-r'].forEach(id=>document.getElementById(id).value='');
+  rAdBlocks(); showToast('Data '+fd(d)+' bloqueada!','🚫');
+}
+function rmBlock(id){
+  DB.blocks=DB.blocks.filter(b=>b.id!==id); saveDB(); rAdBlocks();
+  showToast('Bloqueio removido.','✅');
+}
+
+// ADMIN CANCEL
+function adOpenCancel(id){
+  adCancelId=id;
+  const a=DB.appointments.find(x=>x.id===id);
+  document.getElementById('m-adcancel-info').innerHTML=`<b>${a.client}</b><br>${fd(a.date)} às ${a.time} — ${a.Barbearia}<br>${a.services.map(s=>s.name).join(', ')}<br><b style="color:var(--gold)">R$ ${a.total.toFixed(2)}</b>`;
+  openMod('m-adcancel');
+}
+function adConfirmCancel(){
+  const a=DB.appointments.find(x=>x.id===adCancelId);
+  if(a){a.status='cancelled';a.cancelledAt=new Date().toISOString();a.cancelledBy='admin';
+    pushNotif(a.userId,'❌ Seu agendamento de '+fd(a.date)+' às '+a.time+' foi cancelado pela barbearia.');
+  }
+  saveDB(); closeMod('m-adcancel'); adCancelId=null;
+  rAdAppts(); updateStats();
+  showToast('Agendamento cancelado pelo admin.','❌');
+}
+
+function adTab(tab){
+  document.querySelectorAll('.atab').forEach((el,i)=>{
+    el.classList.toggle('on',['clients','appts','Barbearias','services','blocks','sheets'][i]===tab);
+  });
+  document.querySelectorAll('.apanel').forEach(p=>p.classList.remove('on'));
+  document.getElementById('p-'+tab).classList.add('on');
+}
+
+// ═══════════ GOOGLE SHEETS ═══════════
+function saveShCfg(){
+  DB.sheetsUrl=document.getElementById('sh-url').value.trim(); saveDB();
+  const dot=document.getElementById('shdot'),txt=document.getElementById('sh-stxt');
+  if(DB.sheetsUrl){dot.classList.remove('off');txt.textContent='URL configurada — pronto para sincronizar';}
+  else{dot.classList.add('off');txt.textContent='Dados salvos localmente';}
+  showToast('URL salva!','💾');
+}
+
+function calcRev(){
+  const c=DB.appointments.filter(a=>a.status==='confirmed');
+  const now=new Date();
+  return [
+    {Periodo:'Esta Semana',Total:c.filter(a=>new Date(a.datetime)>=new Date(now.getTime()-7*864e5)).reduce((s,a)=>s+a.total,0).toFixed(2),Agendamentos:c.filter(a=>new Date(a.datetime)>=new Date(now.getTime()-7*864e5)).length},
+    {Periodo:'Mês Atual',Total:c.filter(a=>new Date(a.datetime)>=new Date(now.getFullYear(),now.getMonth(),1)).reduce((s,a)=>s+a.total,0).toFixed(2),Agendamentos:c.filter(a=>new Date(a.datetime)>=new Date(now.getFullYear(),now.getMonth(),1)).length},
+    {Periodo:'Ano '+now.getFullYear(),Total:c.filter(a=>new Date(a.datetime)>=new Date(now.getFullYear(),0,1)).reduce((s,a)=>s+a.total,0).toFixed(2),Agendamentos:c.filter(a=>new Date(a.datetime)>=new Date(now.getFullYear(),0,1)).length},
+    {Periodo:'Total Geral',Total:c.reduce((s,a)=>s+a.total,0).toFixed(2),Agendamentos:c.length},
+  ];
+}
+
+async function syncSheets(){
+  if(!DB.sheetsUrl){showToast('Configure a URL do Apps Script primeiro!','⚠️');return;}
+  showLoad(true);
+  try{
+    const payload={
+      action:'sync_all',
+      clients:DB.users.filter(u=>u.role!=='admin').map(u=>{
+        const ap=DB.appointments.filter(a=>a.userId===u.id&&a.status==='confirmed');
+        return {id:u.id,Nome:u.name,Email:u.email,Telefone:u.phone||'',Nascimento:u.dob||'',Casamento:u.wedding||'',Cadastro:u.createdAt,Agendamentos:ap.length,TotalGasto:ap.reduce((s,a)=>s+a.total,0).toFixed(2)};
+      }),
+      appointments:DB.appointments.map(a=>({id:a.id,Cliente:a.client,Telefone:a.clientPhone||'',Barbeiro:a.Barbearia,Data:a.date,Horario:a.time,Servicos:a.services.map(s=>s.name).join(', '),Total:a.total,Status:a.status,Criado:a.createdAt,CanceladoEm:a.cancelledAt||'',CanceladoPor:a.cancelledBy||''})),
+      Barbearias:DB.Barbearias.map(b=>{
+        const ap=DB.appointments.filter(x=>x.Barbearia===b.name&&x.status==='confirmed');
+        const sc={};ap.forEach(a=>a.services.forEach(s=>{sc[s.name]=(sc[s.name]||0)+1;}));
+        const top=Object.entries(sc).sort((a,b)=>b[1]-a[1])[0];
+        return {Nome:b.name,Funcao:b.role,Emoji:b.emoji,Agendamentos:ap.length,Faturamento:ap.reduce((s,a)=>s+a.total,0).toFixed(2),TopServico:top?top[0]:'—'};
+      }),
+      blocks:DB.blocks.map(b=>({id:b.id,date:b.date,reason:b.reason,createdAt:b.createdAt||''})),
+      revenue:calcRev(),
+    };
+    await fetch(DB.sheetsUrl,{method:'POST',mode:'no-cors',body:JSON.stringify(payload),headers:{'Content-Type':'application/json'}});
+    document.getElementById('sh-stxt').textContent='Sincronizado em '+new Date().toLocaleTimeString('pt-BR');
+    showToast('Dados sincronizados com Google Sheets!','📊');
+  }catch(e){showToast('Erro ao sincronizar. Verifique a URL.','❌');}
+  showLoad(false);
+}
+
+function syncAuto(type,data){
+  if(!DB.sheetsUrl) return;
+  try{fetch(DB.sheetsUrl,{method:'POST',mode:'no-cors',body:JSON.stringify({action:'sync_event',type,data}),headers:{'Content-Type':'application/json'}});}catch(e){}
+}
+
+function expCSV(type){
+  let rows=[],fn='';
+  if(type==='clients'){
+    rows=[['ID','Nome','E-mail','Telefone','Nascimento','Casamento','Cadastro em','Agendamentos','Total Gasto R$']];
+    DB.users.filter(u=>u.role!=='admin').forEach(u=>{
+      const ap=DB.appointments.filter(a=>a.userId===u.id&&a.status==='confirmed');
+      rows.push([u.id,u.name,u.email,u.phone||'',u.dob||'',u.wedding||'',u.createdAt,ap.length,ap.reduce((s,a)=>s+a.total,0).toFixed(2)]);
+    }); fn='clientes.csv';
+  }else if(type==='appointments'){
+    rows=[['ID','Cliente','Telefone','Barbeiro','Data','Horário','Serviços','Total R$','Status','Criado em']];
+    DB.appointments.sort((a,b)=>new Date(b.datetime)-new Date(a.datetime)).forEach(a=>{
+      rows.push([a.id,a.client,a.clientPhone||'',a.Barbearia,a.date,a.time,a.services.map(s=>s.name).join(' | '),a.total.toFixed(2),a.status,a.createdAt]);
+    }); fn='agendamentos.csv';
+  }else if(type==='revenue'){
+    rows=[['Período','Total R$','Nº Agendamentos']];
+    calcRev().forEach(r=>rows.push([r.Periodo,r.Total,r.Agendamentos]));
+    fn='faturamento.csv';
+  }else{
+    rows=[['Nome','Função','Agendamentos','Faturamento Total R$']];
+    DB.Barbearias.forEach(b=>{
+      const ap=DB.appointments.filter(a=>a.Barbearia===b.name&&a.status==='confirmed');
+      rows.push([b.name,b.role,ap.length,ap.reduce((s,a)=>s+a.total,0).toFixed(2)]);
+    }); fn='barbeiros.csv';
+  }
+  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download=fn; a.click();
+  showToast(fn+' baixado!','📥');
+}
+
+// ═══════════ MODALS ═══════════
+function openMod(id){document.getElementById(id).classList.add('on');}
+function closeMod(id){document.getElementById(id).classList.remove('on');}
+
+// ═══════════ UI HELPERS ═══════════
+function showToast(msg,ico='✅'){
+  document.getElementById('t-msg').textContent=msg;
+  document.getElementById('t-ico').textContent=ico;
+  const t=document.getElementById('toast');
+  t.classList.add('on');
+  clearTimeout(window._tt);
+  window._tt=setTimeout(()=>t.classList.remove('on'),3200);
+}
+function showLoad(on){document.getElementById('lovr').classList.toggle('on',on);}
+function shakEl(id){
+  const el=document.getElementById(id);if(!el)return;
+  el.style.animation='none';
+  setTimeout(()=>{el.style.animation='shake .4s';},10);
+}
+function togglePw(id,btn){
+  const el=document.getElementById(id);if(!el)return;
+  if(el.type==='password'){el.type='text';btn.textContent='🙈';}
+  else{el.type='password';btn.textContent='👁';}
+}
+function maskPh(el){
+  let v=el.value.replace(/\D/g,'').slice(0,11);
+  if(v.length>6) v='('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);
+  else if(v.length>2) v='('+v.slice(0,2)+') '+v.slice(2);
+  else if(v.length) v='('+v;
+  el.value=v;
+}
+function fd(iso){if(!iso)return'—';const[y,m,d]=iso.split('-');return`${d}/${m}/${y}`;}
+function fmtM(n){return n>=1000?(n/1000).toFixed(1)+'k':n.toFixed(0);}
+function ts(iso){
+  const s=Math.floor((Date.now()-new Date(iso).getTime())/1000);
+  if(s<60) return 'agora';
+  if(s<3600) return Math.floor(s/60)+'min atrás';
+  if(s<86400) return Math.floor(s/3600)+'h atrás';
+  return Math.floor(s/86400)+'d atrás';
+}
+
+// ═══════════ INIT ═══════════
+loadDB();
+if(restoreSession()){
+  updateNBadge(); updateAvatars();
+  if(isAdm){nav('s-admin');renderAdmin();}
+  else{updateDash();renderUpcoming();renderHistory();checkBdays();nav('s-dash');}
+}
+</script>
+</body>
+</html>
